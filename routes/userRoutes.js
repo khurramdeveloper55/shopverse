@@ -1,8 +1,22 @@
 import express from "express";
-import { createUser } from "../controller/userController.js";
+import { login, protect, signup } from "../controller/authController.js";
+import {
+  deleteUser,
+  getUser,
+  getUsers,
+  updateUser,
+} from "../controller/userController.js";
 
 const router = express.Router();
 
-router.route("/").post(createUser);
+router.route("/signup").post(signup);
+router.route("/login").post(login);
+
+router.route("/").get(protect, getUsers);
+router
+  .route("/:id")
+  .get(protect, getUser)
+  .patch(protect, updateUser)
+  .delete(protect, deleteUser);
 
 export default router;

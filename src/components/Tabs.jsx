@@ -78,7 +78,7 @@ export default function Tabs() {
 
       {/* Right: Related Products Sidebar */}
       <div className="lg:w-1/3">
-        <h3 className="text-2xl! font-semibold text-left tracking-widest mb-8 text-gray-800">
+        <h3 className="text-2xl! font-semibold! text-left  mb-8 text-gray-800">
           Related Products
         </h3>
         <div className="space-y-8">
@@ -106,7 +106,7 @@ export default function Tabs() {
                 <h4 className="text-sm font-semibold text-gray-800 mb-2 leading-snug hover:text-[#BFA07A] cursor-pointer">
                   {product.name}
                 </h4>
-                <p className="text-sm font-bold text-gray-900">
+                <p className="text-sm font-semibold text-gray-900">
                   Rs. {product.price.toFixed(2)}
                 </p>
               </div>

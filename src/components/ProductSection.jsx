@@ -47,7 +47,7 @@ export default function ProductSection() {
       <div className="flex flex-col lg:flex-row gap-12">
         {/* Left: Gallery */}
         <div className="lg:w-7/12">
-          <div className="relative bg-[#F9F9F9] rounded overflow-hidden aspect-square mb-4">
+          <div className="relative bg-[#fffbf3] rounded overflow-hidden aspect-square mb-4">
             <img
               src={WATCH_IMAGES[activeImage]}
               alt="Main watch"

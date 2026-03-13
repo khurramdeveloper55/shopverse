@@ -163,11 +163,11 @@ export const BLOG_POSTS = [
 ];
 
 export const WATCH_IMAGES = [
-  "https://picsum.photos/seed/watch1/800/800",
-  "https://picsum.photos/seed/watch2/800/800",
-  "https://picsum.photos/seed/watch3/800/800",
-  "https://picsum.photos/seed/watch4/800/800",
-  "https://picsum.photos/seed/watch5/800/800",
+  "watches/watch-1.webp",
+  "watches/watch-2.webp",
+  "watches/watch-3.webp",
+  "watches/watch-4.webp",
+  "watches/watch-5.webp",
 ];
 
 export const RELATED_PRODUCTS = [
@@ -175,14 +175,14 @@ export const RELATED_PRODUCTS = [
     id: "1",
     name: "Blue Dial Diver's Watch with Rubber Strap",
     price: 20.0,
-    image: "https://picsum.photos/seed/rel1/400/500",
+    image: "watches/watch-6.webp",
     brand: "OROLO",
   },
   {
     id: "2",
     name: "Chronograph Watch with Leather & Metal Mix",
     price: 21.0,
-    image: "https://picsum.photos/seed/rel2/400/500",
+    image: "watches/watch-6-alt.webp",
     brand: "OROLO",
   },
 ];
@@ -192,7 +192,7 @@ export const RECOMMENDATIONS = [
     id: "3",
     name: "Military Tactical Digital Watch",
     price: 25.0,
-    image: "https://picsum.photos/seed/rec1/400/500",
+    image: "watches/watch-1.webp",
     brand: "GEARGUARD",
   },
   {
@@ -201,21 +201,21 @@ export const RECOMMENDATIONS = [
     price: 25.0,
     originalPrice: 32.0,
     discount: "-21%",
-    image: "https://picsum.photos/seed/rec2/400/500",
+    image: "watches/watch-2.webp",
     brand: "URBANTICK",
   },
   {
     id: "5",
     name: "Smart Fitness Tracker Watch",
     price: 25.0,
-    image: "https://picsum.photos/seed/rec3/400/500",
+    image: "watches/watch-3.webp",
     brand: "FITPULSE",
   },
   {
     id: "6",
     name: "Smartwatch with Call & Message Notifications",
     price: 25.0,
-    image: "https://picsum.photos/seed/rec4/400/500",
+    image: "watches/watch-4.webp",
     brand: "TECHCHRONO",
   },
 ];

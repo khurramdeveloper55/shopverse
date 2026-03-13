@@ -15,11 +15,6 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body {
@@ -29,6 +24,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: "Rajdhani", sans-serif;
+  overflow-x: hidden;
   color: #000;
 }
 
@@ -97,15 +93,26 @@ button:focus-visible {
   color: #a8741a;
 }
 
+.quote__style_2 .media:before {
+  line-height: 0;
+  content: "\201c";
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.15); /* or use your rgb var */
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(180deg);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
-  }
+
   button {
-    background-color: #f9f9f9;
+    background-color: transparent;
   }
 }

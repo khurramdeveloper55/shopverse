@@ -39,7 +39,7 @@ export const Product = sequelize.define("Product", {
     defaultValue: "Digital",
   },
   images: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSONB,
     defaultValue: [],
   },
   sizes: {

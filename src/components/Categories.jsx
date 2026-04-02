@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { CATEGORIES } from "../constants";
 import { ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
+import useCategories from "../hooks/useCategories";
 
 export default function Categories() {
   const [startIndex, setStartIndex] = useState(0);
@@ -53,6 +54,10 @@ export default function Categories() {
     return items;
   };
 
+  const { categories, isLoading } = useCategories();
+  if (isLoading) return <div>Loading...</div>;
+  console.log(categories);
+
   return (
     <section className="py-20 bg-white relative overflow-hidden group/section">
       <div className="container mx-auto px-4">
@@ -79,7 +84,7 @@ export default function Categories() {
 
           {/* Categories Row */}
           <div className="flex-1 flex gap-x-6 overflow-hidden">
-            {getDisplayedItems().map((cat, i) => (
+            {categories.map((cat, i) => (
               <div
                 key={`${cat.name}-${startIndex}-${i}`}
                 className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] transition-all duration-500 transform animate-fade-in"
@@ -143,7 +148,7 @@ export default function Categories() {
                       {cat.name}
                     </h4>
                     <p className="text-neutral-500/60 text-lg font-medium">
-                      {cat.count} products
+                      {cat.Products.length} products
                     </p>
                   </div>
                 </div>

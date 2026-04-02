@@ -13,7 +13,11 @@ export const Category = sequelize.define("Category", {
     allowNull: false,
   },
   image: {
-    type: DataTypes.JSON,
+    type: DataTypes.JSONB,
+    defaultValue: [],
+  },
+  bgImage: {
+    type: DataTypes.JSONB,
     defaultValue: [],
   },
 });

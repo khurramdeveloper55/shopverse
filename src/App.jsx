@@ -6,7 +6,9 @@ import Layout from "./components/Layout";
 import { Route } from "react-router-dom";
 import ProductPage from "./components/ProductPage";
 import ProductDetailPage from "./components/ProductDetailPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -22,15 +24,17 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/product-detail" element={<ProductDetailPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/product" element={<ProductPage />} />
+            <Route path="/product-detail" element={<ProductDetailPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

@@ -1,15 +1,34 @@
 import { useState } from "react";
 import { ChevronDown, Plus, Minus } from "lucide-react";
+import useCategoryDetail from "../hooks/useCategoryDetail";
+import { useParams } from "react-router-dom";
 
-export default function SidebarFilter() {
-  const [maxPrice, setMaxPrice] = useState(100);
+export default function SidebarFilter({
+  availability,
+  setAvailability,
+  brandFilter,
+  setBrandFilter,
+  typeFilter,
+  setTypeFilter,
+}) {
+  const { categoryName } = useParams();
+  const { category = [], isLoading } = useCategoryDetail(categoryName);
+  const products = category?.Products || [];
+
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(50);
+  const minLimit = 0;
+  const maxLimit = 50;
+
+  // Convert values to percentages for the range track
+  const minPercent = ((minPrice - minLimit) / (maxLimit - minLimit)) * 100;
+  const maxPercent = ((maxPrice - minLimit) / (maxLimit - minLimit)) * 100;
   const [openSections, setOpenSections] = useState({
     Availability: true,
     Price: true,
     Brand: true,
-    Category: false,
-    Material: false,
-    Size: false,
+    Type: true,
+    Size: true,
   });
 
   const toggleSection = (title) => {
@@ -60,18 +79,50 @@ export default function SidebarFilter() {
     },
   ];
 
+  const categoriess = [
+    { label: "Rolex", count: 12 },
+    { label: "Casio", count: 8 },
+    { label: "Omega", count: 5 },
+  ];
+
+  const brands = [
+    { label: "Rolex", count: 12 },
+    { label: "Casio", count: 8 },
+    { label: "Omega", count: 5 },
+  ];
+
+  const inStock = products.filter(
+    (product) => product.availability === true && product.stock > 0,
+  ).length;
+
+  const outOfStock = products.filter(
+    (product) => product.availability === false || product.stock === 0,
+  ).length;
+
+  const availableOpt = [
+    { label: "In stock", count: inStock, value: "inStock" },
+    { label: "Out of stock", count: outOfStock, value: "outOfStock" },
+  ];
+
+  const uniqueVendor = [...new Set(products.map((product) => product.vendor))];
+  const uniqueTypes = [...new Set(products.map((product) => product.type))];
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <aside className="w-full md:w-64 shrink-0 px-4 py-8 open-sans">
-      <h2 className="text-3xl text-left font-semibold text-neutral-500 mb-8">
+      <h2 className="text-[1.8rem] text-left font-semibold text-neutral-500 mb-6">
         Filter:
       </h2>
 
-      <div className="mb-8 pb-4 border-b border-t border-gray-100">
+      <div className="mb-6 pb-6 border-b border-t border-gray-100">
         <div
           className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
           onClick={() => toggleSection("Availability")}
         >
-          <h5 className="text-[18px]! mt-4  font-semibold no-underline text-neutral-950 mb-0">
+          <h5 className="text-[16px]! mt-4  font-semibold no-underline text-neutral-950 mb-0">
             Availability
           </h5>
           <ChevronDown
@@ -83,13 +134,21 @@ export default function SidebarFilter() {
         </div>
         {openSections["Availability"] && (
           <div className="space-y-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            {filterSections[0].options.map((opt) => (
+            {availableOpt.map((opt) => (
               <label
                 key={opt.label}
                 className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-black transition-colors"
               >
                 <input
                   type="checkbox"
+                  checked={availability.includes(opt.value)}
+                  onChange={() => {
+                    setAvailability((prev) =>
+                      prev.includes(opt.value)
+                        ? prev.filter((item) => item != opt.value)
+                        : [...prev, opt.value],
+                    );
+                  }}
                   className="w-4 h-4 rounded border-gray-300 accent-black"
                 />
                 <span>
@@ -101,12 +160,12 @@ export default function SidebarFilter() {
         )}
       </div>
 
-      <div className="mb-8 pb-4 border-b border-gray-100">
+      <div className="mb-6 pb-6 border-b border-gray-100">
         <div
           className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
           onClick={() => toggleSection("Price")}
         >
-          <h5 className="text-[18px] font-semibold">Price</h5>
+          <h5 className="text-[16px] font-semibold">Price</h5>
           <ChevronDown
             size={16}
             className={`transition-transform duration-300 ${
@@ -115,38 +174,93 @@ export default function SidebarFilter() {
           />
         </div>
         {openSections["Price"] && (
-          <div className="px-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            <div className="relative mb-6">
+          <div className="px-2 pt-2 pb-3">
+            {/* Slider */}
+            <div className="relative mb-5 h-6">
+              {/* Full Track */}
+              <div className="absolute top-2 left-0 right-0 h-1 bg-gray-200 rounded-full" />
+
+              {/* Selected Range */}
+              <div
+                className="absolute top-2 h-1 bg-black rounded-full"
+                style={{
+                  left: `${minPercent}%`,
+                  right: `${100 - maxPercent}%`,
+                }}
+              />
+
+              {/* Left Thumb */}
               <input
                 type="range"
-                min="0"
-                max="500"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                className="w-full h-1 bg-gray-200 rounded-full appearance-none cursor-pointer accent-black"
+                min={minLimit}
+                max={maxLimit}
+                value={minPrice}
+                onChange={(e) =>
+                  setMinPrice(Math.min(Number(e.target.value), maxPrice - 1))
+                }
+                className="absolute w-full h-6 appearance-none bg-transparent pointer-events-none
+                       [&::-webkit-slider-thumb]:pointer-events-auto
+                       [&::-webkit-slider-thumb]:appearance-none
+                       [&::-webkit-slider-thumb]:h-4
+                       [&::-webkit-slider-thumb]:w-4
+                       [&::-webkit-slider-thumb]:rounded-full
+                       [&::-webkit-slider-thumb]:bg-black
+                       [&::-webkit-slider-thumb]:cursor-pointer"
               />
-              <div className="flex justify-between mt-2 text-[10px] text-gray-400 font-semibold uppercase tracking-wider">
-                <span>Min: Rs. 0</span>
-                <span>Max: Rs. 500</span>
-              </div>
+
+              {/* Right Thumb */}
+              <input
+                type="range"
+                min={minLimit}
+                max={maxLimit}
+                value={maxPrice}
+                onChange={(e) =>
+                  setMaxPrice(Math.max(Number(e.target.value), minPrice + 1))
+                }
+                className="absolute w-full h-6 appearance-none bg-transparent pointer-events-none
+                       [&::-webkit-slider-thumb]:pointer-events-auto
+                       [&::-webkit-slider-thumb]:appearance-none
+                       [&::-webkit-slider-thumb]:h-4
+                       [&::-webkit-slider-thumb]:w-4
+                       [&::-webkit-slider-thumb]:rounded-full
+                       [&::-webkit-slider-thumb]:bg-black
+                       [&::-webkit-slider-thumb]:cursor-pointer"
+              />
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 flex items-center border border-gray-300 rounded p-1 text-xs bg-gray-50">
-                <span className="mr-1 text-gray-400">Rs.</span>
+
+            {/* Inputs */}
+            <div className="flex items-center gap-3">
+              {/* Min Input */}
+              <div className="flex items-center w-1/2">
+                <span className="mr-2 text-sm text-gray-500 relative -top-1">
+                  Rs.
+                </span>
                 <input
-                  type="text"
-                  value="0"
-                  className="w-full bg-transparent outline-none cursor-default"
-                  readOnly
+                  type="number"
+                  min={minLimit}
+                  max={maxPrice - 1}
+                  value={minPrice}
+                  onChange={(e) =>
+                    setMinPrice(Math.min(Number(e.target.value), maxPrice - 1))
+                  }
+                  className="w-full h-11 px-4 border border-gray-300 text-sm outline-none"
                 />
               </div>
-              <div className="flex-1 flex items-center border border-gray-300 rounded p-1 text-xs">
-                <span className="mr-1 text-gray-400">Rs.</span>
+
+              {/* Max Input */}
+              <div className="flex items-center w-1/2">
+                <span className="mr-2 text-sm text-gray-500 relative -top-1">
+                  Rs.
+                </span>
                 <input
-                  type="text"
-                  value={maxPrice.toFixed(2)}
-                  onChange={(e) => setMaxPrice(parseFloat(e.target.value) || 0)}
-                  className="w-full outline-none"
+                  type="number"
+                  min={minPrice + 1}
+                  max={maxLimit}
+                  value={maxPrice}
+                  onChange={(e) =>
+                    setMaxPrice(Math.max(Number(e.target.value), minPrice + 1))
+                  }
+                  className="w-full h-11 px-4 border border-gray-300 text-sm outline-none"
                 />
               </div>
             </div>
@@ -154,67 +268,78 @@ export default function SidebarFilter() {
         )}
       </div>
 
-      {filterSections.slice(1).map((section) => (
-        <div key={section.title} className="mb-8 pb-4 border-b border-gray-100">
-          <div
-            className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
-            onClick={() => toggleSection(section.title)}
-          >
-            <h5 className="text-[18px] font-semibold tracking-wider">
-              {section.title}
-            </h5>
-            <ChevronDown
-              size={16}
-              className={`transition-transform duration-300 ${
-                openSections[section.title] ? "rotate-180" : ""
-              }`}
-            />
-          </div>
-          {openSections[section.title] && (
-            <div className="space-y-2 animate-in fade-in slide-in-from-top-1 duration-200">
-              {section.options.map((opt) => (
-                <label
-                  key={opt.label}
-                  className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-black transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 rounded border-gray-300 accent-black"
-                  />
-                  <span>
-                    {opt.label} ({opt.count})
-                  </span>
-                </label>
-              ))}
-              <button className="text-xs! text-gray-400 hover:text-black flex items-center gap-1 mt-2">
-                <Plus size={12} /> Show more
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
-
-      <div className="mb-8">
+      <div className="mb-6 pb-6 border-b border-gray-100">
         <div
           className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
-          onClick={() => toggleSection("Size")}
+          onClick={() => toggleSection("Brand")}
         >
-          <h5 className="text-[18px]! font-semibold">Size</h5>
+          <h5 className="text-[16px] font-semibold tracking-wider">Brand</h5>
           <ChevronDown
             size={16}
             className={`transition-transform duration-300 ${
-              openSections["Size"] ? "rotate-180" : ""
+              openSections.Brand ? "rotate-180" : ""
             }`}
           />
         </div>
-        {openSections["Size"] && (
-          <div className="flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            {["S", "M", "L", "XL"].map((size) => (
-              <label key={size} className="cursor-pointer">
-                <input type="checkbox" className="sr-only peer" />
-                <div className="w-10 h-10 border border-gray-200 rounded flex items-center justify-center text-xs font-semibold peer-checked:bg-black peer-checked:text-white transition-all">
-                  {size}
-                </div>
+
+        {openSections.Brand && (
+          <div className="space-y-2">
+            {uniqueVendor.map((opt) => (
+              <label
+                key={opt}
+                className="flex items-center gap-2 text-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  checked={brandFilter.includes(opt)}
+                  onChange={() =>
+                    setBrandFilter((prev) =>
+                      prev.includes(opt)
+                        ? prev.filter((item) => item != opt)
+                        : [...prev, opt],
+                    )
+                  }
+                />
+                <span>{opt}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="mb-6 pb-6 border-b border-gray-100">
+        <div
+          className="flex items-center justify-between mb-4 cursor-pointer"
+          onClick={() => toggleSection("Type")}
+        >
+          <h5 className="text-[16px] font-semibold tracking-wider">Types</h5>
+          <ChevronDown
+            size={16}
+            className={`transition-transform duration-300 ${
+              openSections.Type ? "rotate-180" : ""
+            }`}
+          />
+        </div>
+
+        {openSections.Type && (
+          <div className="space-y-2">
+            {uniqueTypes.map((opt) => (
+              <label
+                key={opt}
+                className="flex items-center gap-2 text-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  checked={typeFilter.includes(opt)}
+                  onChange={() =>
+                    setTypeFilter((prev) =>
+                      prev.includes(opt)
+                        ? prev.filter((item) => item != opt)
+                        : [...prev, opt],
+                    )
+                  }
+                />
+                <span>{opt}</span>
               </label>
             ))}
           </div>

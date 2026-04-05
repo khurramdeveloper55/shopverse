@@ -13,8 +13,10 @@ import {
   Truck,
 } from "lucide-react";
 import { WATCH_IMAGES, RELATED_PRODUCTS } from "../constants";
+import { useParams } from "react-router-dom";
 
-export default function ProductSection() {
+export default function ProductSection({ product }) {
+  const { categoryName } = useParams();
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState("S");
 
@@ -34,12 +36,12 @@ export default function ProductSection() {
               href="/category/smartwatches"
               className="hover:text-gray-900 hover:underline"
             >
-              Smartwatches & Fitness Trackers
+              {categoryName}
             </a>
           </li>
           <li className="mx-2 text-gray-400">/</li>
           <li className="text-gray-900 font-medium" aria-current="page">
-            Men's Skeleton Automatic Mechanical Watch
+            {product.name}
           </li>
         </ol>
       </nav>
@@ -49,14 +51,14 @@ export default function ProductSection() {
         <div className="lg:w-7/12">
           <div className="relative bg-[#fffbf3] rounded overflow-hidden aspect-square mb-4">
             <img
-              src={WATCH_IMAGES[activeImage]}
+              src={product.images[activeImage].main}
               alt="Main watch"
               className="w-full h-full object-contain"
             />
             <button
               onClick={() =>
                 setActiveImage((prev) =>
-                  prev > 0 ? prev - 1 : WATCH_IMAGES.length - 1,
+                  prev > 0 ? prev - 1 : product.images.length - 1,
                 )
               }
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-sm hover:bg-white"
@@ -66,7 +68,7 @@ export default function ProductSection() {
             <button
               onClick={() =>
                 setActiveImage((prev) =>
-                  prev < WATCH_IMAGES.length - 1 ? prev + 1 : 0,
+                  prev < product.images.length - 1 ? prev + 1 : 0,
                 )
               }
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-sm hover:bg-white"
@@ -75,7 +77,7 @@ export default function ProductSection() {
             </button>
           </div>
           <div className="grid grid-cols-5 gap-4">
-            {WATCH_IMAGES.map((img, idx) => (
+            {product.images.map((imgObj, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveImage(idx)}
@@ -84,7 +86,7 @@ export default function ProductSection() {
                 }`}
               >
                 <img
-                  src={img}
+                  src={imgObj.thumb}
                   alt={`Thumb ${idx}`}
                   className="w-full h-full object-cover"
                 />
@@ -96,7 +98,7 @@ export default function ProductSection() {
         {/* Right: Details */}
         <div className="lg:w-5/12 text-left">
           <h1 className="text-4xl! font-semibold text-gray-900 mb-2 leading-tight">
-            Smart Fitness Tracker Watch
+            {product.name}
           </h1>
           <div className="flex items-center gap-1 mb-4">
             {[...Array(5)].map((_, i) => (
@@ -104,7 +106,7 @@ export default function ProductSection() {
             ))}
           </div>
           <div className="text-2xl text-neutral-500 font-medium mb-8">
-            Rs. 25.00
+            Rs. {product.price}
           </div>
 
           {/* Size Picker */}
@@ -137,13 +139,13 @@ export default function ProductSection() {
           <div className="border-t border-gray-100 pt-6 space-y-3 open-sans">
             <div className="flex text-sm gap-8">
               <span className="text-gray-400 w-24">Vendor:</span>
-              <span className="text-gray-700 font-medium">MechMasters</span>
+              <span className="text-gray-700 font-medium">
+                {product.vendor}
+              </span>
             </div>
             <div className="flex text-sm gap-8">
               <span className="text-gray-400 w-24">Type:</span>
-              <span className="text-gray-700 font-medium">
-                Mechanical Watch
-              </span>
+              <span className="text-gray-700 font-medium">{product.type}</span>
             </div>
             <div className="flex text-sm gap-8">
               <span className="text-gray-400 w-24">Sku:</span>
@@ -237,28 +239,30 @@ export default function ProductSection() {
             <p className="text-[12px] uppercase tracking-widest font-bold text-gray-400">
               Guarantee safe checkout
             </p>
-            <div className="flex gap-2 grayscale opacity-60">
-              <img
-                src="https://img.icons8.com/color/48/visa.png"
-                className="w-8"
-                alt="visa"
-              />
-              <img
-                src="https://img.icons8.com/color/48/mastercard.png"
-                className="w-8"
-                alt="mastercard"
-              />
-              <img
-                src="https://img.icons8.com/color/48/paypal.png"
-                className="w-8"
-                alt="paypal"
-              />
-              <img
-                src="https://img.icons8.com/color/48/apple-pay.png"
-                className="w-8"
-                alt="applepay"
-              />
-            </div>
+            {
+              <div className="flex gap-2 grayscale opacity-60">
+                <img
+                  src="https://img.icons8.com/color/48/visa.png"
+                  className="w-8"
+                  alt="visa"
+                />
+                <img
+                  src="https://img.icons8.com/color/48/mastercard.png"
+                  className="w-8"
+                  alt="mastercard"
+                />
+                <img
+                  src="https://img.icons8.com/color/48/paypal.png"
+                  className="w-8"
+                  alt="paypal"
+                />
+                <img
+                  src="https://img.icons8.com/color/48/apple-pay.png"
+                  className="w-8"
+                  alt="applepay"
+                />
+              </div>
+            }
           </div>
         </div>
       </div>

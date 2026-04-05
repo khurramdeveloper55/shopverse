@@ -1,13 +1,13 @@
-import Hero from "./Hero";
-import Categories from "./Categories";
-import BannerAds from "./BannerAds";
-import ProductGrid from "./ProductGrid";
-import FeaturedSection from "./FeaturedSection";
-import ElegantSlider from "./ElegantSlider";
-import Craftsmanship from "./Craftsmanship";
-import ServiceFeatures from "./ServiceFeatures";
-import Testimonials from "./Testimonials";
-import BlogSection from "./BlogSection";
+import Hero from "../components/Hero";
+import Categories from "../components/Categories";
+import BannerAds from "../components/BannerAds";
+import ProductGrid from "../components/ProductGrid";
+import FeaturedSection from "../components/FeaturedSection";
+import ElegantSlider from "../components/ElegantSlider";
+import Craftsmanship from "../components/Craftsmanship";
+import ServiceFeatures from "../components/ServiceFeatures";
+import Testimonials from "../components/Testimonials";
+import BlogSection from "../components/BlogSection";
 
 export default function Home() {
   return (

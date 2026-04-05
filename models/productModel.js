@@ -46,6 +46,15 @@ export const Product = sequelize.define("Product", {
     type: DataTypes.ENUM("S", "M", "L"),
     defaultValue: "S",
   },
+  rating: {
+    type: DataTypes.DECIMAL(2, 1),
+    defaultValue: 0,
+  },
+  slug: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   categoryId: {
     type: DataTypes.UUID,
     references: {

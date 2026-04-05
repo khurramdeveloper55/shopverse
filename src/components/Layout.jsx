@@ -6,16 +6,6 @@ import { Outlet } from "react-router-dom";
 export default function Layout({ scrollToTop, showBackToTop }) {
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Promo Bar */}
-      <div className="bg-black text-white text-[10px] md:text-xs py-2 px-4 flex justify-between items-center tracking-wider overflow-x-auto whitespace-nowrap">
-        <span>
-          UNLOCK RADIANT BEAUTY: ENJOY A FREE GIFT WITH EVERY PURCHASE!
-        </span>
-        <span className="mx-4">
-          FLASH SALE ALERT: SAVE UP TO 40% - LIMITED STOCK, ACT FAST!
-        </span>
-        <span>FREE SHIPPING ON ALL U.S. ORDERS $50+</span>
-      </div>
       <Header />
       <main>
         <Outlet />

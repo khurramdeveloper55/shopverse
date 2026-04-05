@@ -1,16 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
-import { CATEGORIES } from "../constants";
-import { ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import useCategories from "../hooks/useCategories";
 
 export default function Categories() {
+  const { categories = [], isLoading } = useCategories();
+
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(6);
-  const shouldShowNavigation = itemsToShow < CATEGORIES.length;
-  const totalPages = Math.ceil(CATEGORIES.length / itemsToShow);
+  const shouldShowNavigation = itemsToShow < categories.length;
+  const totalPages = Math.ceil(categories.length / itemsToShow);
   const currentPage = Math.floor(startIndex / itemsToShow);
 
-  // Update items count based on window width
   const updateItemsToShow = useCallback(() => {
     const width = window.innerWidth;
     if (width >= 1200) {
@@ -33,7 +33,7 @@ export default function Categories() {
 
     setStartIndex((prev) => {
       const nextIndex = prev + itemsToShow;
-      return nextIndex >= CATEGORIES.length ? 0 : nextIndex;
+      return nextIndex >= categories.length ? 0 : nextIndex;
     });
   };
 
@@ -46,17 +46,7 @@ export default function Categories() {
     });
   };
 
-  const getDisplayedItems = () => {
-    const items = [];
-    for (let i = 0; i < itemsToShow; i++) {
-      items.push(CATEGORIES[(startIndex + i) % CATEGORIES.length]);
-    }
-    return items;
-  };
-
-  const { categories, isLoading } = useCategories();
   if (isLoading) return <div>Loading...</div>;
-  console.log(categories);
 
   return (
     <section className="py-20 bg-white relative overflow-hidden group/section">
@@ -90,7 +80,6 @@ export default function Categories() {
                 className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] transition-all duration-500 transform animate-fade-in"
               >
                 <div className="group cursor-pointer flex flex-col items-center">
-                  {/* Image Container with Clock Dial */}
                   <div className="relative w-full aspect-square flex items-center justify-center">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <svg
@@ -119,13 +108,12 @@ export default function Categories() {
 
                     <div className="relative w-full overflow-hidden group">
                       <a
-                        href="#"
+                        href={`/collections/${cat.slug}`}
                         className="relative block w-full aspect-square"
                       >
-                        {/* Circular Background Overlay */}
                         <div className="absolute inset-0 m-2.5 rounded-full opacity-25 z-10 pointer-events-none transition duration-300">
                           <img
-                            src="/categories/icon-watch-dial.webp" // your dial image path
+                            src="/categories/icon-watch-dial.webp"
                             alt=""
                             className="w-full h-full object-cover rounded-full"
                           />
@@ -144,9 +132,11 @@ export default function Categories() {
 
                   {/* Category Info */}
                   <div className="text-center mt-6">
-                    <h4 className="text-2xl capitalize group-hover:text-stone-500 pt-3 font-semibold text-neutral-950">
-                      {cat.name}
-                    </h4>
+                    <a href={`/collections/${cat.slug}`}>
+                      <h4 className="text-2xl capitalize group-hover:text-stone-500 pt-3 font-semibold text-neutral-950">
+                        {cat.name}
+                      </h4>
+                    </a>
                     <p className="text-neutral-500/60 text-lg font-medium">
                       {cat.Products.length} products
                     </p>

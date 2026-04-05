@@ -1,11 +1,11 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import { BrowserRouter, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { Route } from "react-router-dom";
-import ProductPage from "./components/ProductPage";
-import ProductDetailPage from "./components/ProductDetailPage";
+import CategoryDetailPage from "./pages/CategoryDetailPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -29,8 +29,14 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/product" element={<ProductPage />} />
-            <Route path="/product-detail" element={<ProductDetailPage />} />
+            <Route
+              path="/collections/:categoryName"
+              element={<CategoryDetailPage />}
+            />
+            <Route
+              path="/collections/:categoryName/product/:productName"
+              element={<ProductDetailPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

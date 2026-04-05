@@ -12,6 +12,11 @@ export const Category = sequelize.define("Category", {
     unique: true,
     allowNull: false,
   },
+  slug: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   image: {
     type: DataTypes.JSONB,
     defaultValue: [],

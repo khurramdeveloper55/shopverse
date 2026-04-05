@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RELATED_PRODUCTS } from "../constants";
 import { ShoppingCart, Eye } from "lucide-react";
 
-export default function Tabs() {
+export default function Tabs({ product }) {
   const [activeTab, setActiveTab] = useState("Description");
 
   return (
@@ -31,19 +31,7 @@ export default function Tabs() {
         <div className="text-lg text-gray-500 leading-relaxed space-y-6 text-left">
           {activeTab === "Description" && (
             <div className="animate-in fade-in duration-500">
-              <p>
-                The Orolo Skeleton Automatic is a testament to the art of
-                mechanical watchmaking. Featuring an intricately designed dial
-                that reveals the beating heart of the movement, this timepiece
-                blends classic elegance with modern industrial aesthetics.
-              </p>
-              <ul className="list-disc pl-5 space-y-2 mt-4">
-                <li>Automatic Self-Winding Movement (No battery required)</li>
-                <li>Scratch-Resistant Sapphire Coated Mineral Glass</li>
-                <li>42mm Case Diameter with Brushed Finish</li>
-                <li>Water Resistant up to 5 ATM</li>
-                <li>Premium Genuine Leather Strap with Contrast Stitching</li>
-              </ul>
+              <p>{product.description}</p>
             </div>
           )}
           {activeTab === "Material" && (
@@ -82,36 +70,34 @@ export default function Tabs() {
           Related Products
         </h3>
         <div className="space-y-8">
-          {RELATED_PRODUCTS.map((product) => (
-            <div key={product.id} className="group flex gap-4 text-left">
-              <div className="relative w-24 h-28 shrink-0 bg-gray-100 rounded overflow-hidden">
-                <img
-                  src={product.image}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  alt={product.name}
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                  <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
-                    <ShoppingCart className="w-3 h-3" />
-                  </button>
-                  <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
-                    <Eye className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-              <div className="flex flex-col justify-center">
-                <p className="text-sm text-gray-400 font-bold uppercase tracking-wider mb-1">
-                  {product.brand}
-                </p>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2 leading-snug hover:text-[#BFA07A] cursor-pointer">
-                  {product.name}
-                </h4>
-                <p className="text-sm font-semibold text-gray-900">
-                  Rs. {product.price.toFixed(2)}
-                </p>
+          <div key={product.id} className="group flex gap-4 text-left">
+            <div className="relative w-24 h-28 shrink-0 bg-gray-100 rounded overflow-hidden">
+              <img
+                src={product.images[0].main}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                alt={product.name}
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
+                  <ShoppingCart className="w-3 h-3" />
+                </button>
+                <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
+                  <Eye className="w-3 h-3" />
+                </button>
               </div>
             </div>
-          ))}
+            <div className="flex flex-col justify-center">
+              <p className="text-sm text-gray-400 font-bold uppercase tracking-wider mb-1">
+                {product.vendor}
+              </p>
+              <h4 className="text-sm font-semibold text-gray-800 mb-2 leading-snug hover:text-[#BFA07A] cursor-pointer">
+                {product.name}
+              </h4>
+              <p className="text-sm font-semibold text-gray-900">
+                Rs. {product.price}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

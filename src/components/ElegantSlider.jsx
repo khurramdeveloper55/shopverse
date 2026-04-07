@@ -1,11 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { Eye, Heart, ChevronLeft, ChevronRight, Repeat } from "lucide-react";
 import useProducts from "../hooks/useProducts";
+import { Link } from "react-router-dom";
 
 export default function ElegantSlider() {
   const { products = [], isLoading } = useProducts();
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3);
+
+  const topExpensiveProducts = [...products]
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 6);
 
   const updateLayout = useCallback(() => {
     const width = window.innerWidth;
@@ -20,34 +25,32 @@ export default function ElegantSlider() {
     return () => window.removeEventListener("resize", updateLayout);
   }, [updateLayout]);
 
-  const next = () => setStartIndex((prev) => (prev + 1) % products.length);
+  const next = () =>
+    setStartIndex((prev) => (prev + 1) % topExpensiveProducts.length);
   const prev = () =>
-    setStartIndex((prev) => (prev - 1 + products.length) % products.length);
-
-  const topExpensiveProducts = [...products]
-    .sort((a, b) => b.price - a.price)
-    .slice(0, 4);
+    setStartIndex(
+      (prev) =>
+        (prev - 1 + topExpensiveProducts.length) % topExpensiveProducts.length,
+    );
 
   const displayedItems = [];
   for (let i = 0; i < itemsToShow; i++) {
     displayedItems.push(
-      topExpensiveProducts[(startIndex + i) % products.length],
+      topExpensiveProducts[(startIndex + i) % topExpensiveProducts.length],
     );
   }
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <section className="py-24 bg-white relative group/elegant overflow-hidden">
+    <section className="py-20 bg-white relative group/elegant overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="primary-yellow text-xs uppercase tracking-[0.4em] font-bold block mb-4">
+        <div className="text-center mb-8">
+          <span className="primary-yellow text-[14px] uppercase tracking-[0.3em] font-semibold block mb-2">
             CLASSIC COLLECTION
           </span>
-          <h2 className="text-3xl md:text-[42px] font-bold text-gray-900 tracking-tight">
-            Elegant designs that never go out of style
-          </h2>
+          <h3>Elegant designs that never go out of style</h3>
         </div>
 
         {/* Slider Container */}
@@ -74,7 +77,7 @@ export default function ElegantSlider() {
             {displayedItems.map((item, i) => (
               <div
                 key={`${item.id}-${i}`}
-                className="group/card flex flex-col items-center animate-fade-in"
+                className="group/card flex flex-col items-center animate-fade-in cursor-pointer"
               >
                 {/* Image Area */}
                 <div className="relative w-full aspect-[1/1.2] bg-[#fffbf3] flex items-center justify-center p-8 mb-8 overflow-hidden ">
@@ -88,25 +91,31 @@ export default function ElegantSlider() {
                   <img
                     src={item.images[1].main || item.images[0].main}
                     alt={item.name}
-                    className="absolute w-full h-full object-contain p-3 opacity-0 transition-all duration-700 group-hover/card:opacity-100 group-hover:scale-105"
+                    className="absolute w-full h-full object-contain p-3 opacity-0 transition-all duration-700 group-hover/card:opacity-100 group-hover/card:scale-105"
                   />
 
                   {/* Hover Tools */}
                   <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 opacity-0 group-hover/card:opacity-100 transition-all duration-500 translate-y-4 group-hover/card:translate-y-0 z-9999">
                     <button
-                      className="bg-white p-3 rounded-full shadow-lg text-gray-700 hover:bg-[#C5A059] hover:text-white transition-colors"
+                      className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
+             shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
+             transition-all duration-200 hover:scale-110"
                       title="Add to Wishlist"
                     >
                       <Heart size={18} />
                     </button>
                     <button
-                      className="bg-white p-3 rounded-full shadow-lg text-gray-700 hover:bg-[#C5A059] hover:text-white transition-colors"
+                      className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
+             shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
+             transition-all duration-200 hover:scale-110"
                       title="Quick View"
                     >
                       <Eye size={18} />
                     </button>
                     <button
-                      className="bg-white p-3 rounded-full shadow-lg text-gray-700 hover:bg-[#C5A059] hover:text-white transition-colors"
+                      className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
+             shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
+             transition-all duration-200 hover:scale-110"
                       title="Compare"
                     >
                       <Repeat size={18} />
@@ -116,44 +125,49 @@ export default function ElegantSlider() {
 
                 {/* Text Content */}
                 <div className="text-center w-full px-4 flex flex-col items-center pb-2">
-                  <p className="text-[11px] text-gray-500 font-semibold tracking-[0.25em] uppercase mb-1">
+                  <p className="text-[14px] text-gray-500 font-semibold tracking-[0.3em] uppercase mb-1">
                     {item.vendor}
                   </p>
-                  <a
+                  <Link
                     href={`/collections/${item.Category?.slug}/product/${item.slug}`}
                   >
-                    <h3 className=" hover:text-[#C5A059] cursor-pointer mb-1 leading-snug text-[#111111] rajdhani-medium text-[22px]! tracking-normal normal-case transition-all duration-300">
+                    <h3 className=" hover:text-[#a8741a] cursor-pointer mb-1 md:leading-snug! text-neutral-950 rajdhani-medium md:text-[22px]! text-[16px]! leading-5! tracking-normal normal-case transition-all duration-300">
                       {item.name}
                     </h3>
-                  </a>
-                  <div className="text-[#C5A059] text-lg flex justify-center mb-2 tracking-[3px]">
-                    {"★".repeat(item.rating)}
+                  </Link>
+                  <div className="flex justify-center mb-2 md:text-2xl text-lg gap-0.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span
+                        key={star}
+                        className="transition-colors primary-yellow"
+                      >
+                        {star <= Math.floor(item.rating) ? "★" : "☆"}
+                      </span>
+                    ))}
                   </div>
 
                   {/* Container for Price / Add to Cart Toggle */}
-                  <div className="relative w-full h-[18px] overflow-hidden flex flex-col items-center">
+                  <div className="relative w-full h-10 overflow-hidden flex flex-col items-center">
                     {/* Price State */}
                     <div
                       className={`flex items-center justify-center gap-2 transition-all duration-300 ${
-                        item.tag !== "Sold Out"
+                        item.tag !== "Add To Cart"
                           ? "group-hover/card:-translate-y-full opacity-100 group-hover/card:opacity-0"
                           : "opacity-100"
                       }`}
                     >
-                      <span className="font-medium text-[#333] text-[16px]">
+                      <span className="font-medium text-neutral-500 md:text-lg text-[16px]">
                         Rs. {item.price}
                       </span>
-                      {item.price && (
-                        <span className="text-[13px] text-gray-400 line-through">
-                          Rs. {item.price}
-                        </span>
-                      )}
                     </div>
 
-                    {/* Add to Cart State (Absolute so it occupies the same space) */}
-
-                    <div className="absolute inset-0 flex items-center justify-center translate-y-full group-hover/card:translate-y-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300">
-                      <button className="text-[13px] font-bold text-black uppercase tracking-[0.2em] border-b-2 border-black pb-0.5 hover:text-[#C5A059] hover:border-[#C5A059] transition-all whitespace-nowrap cursor-pointer z-30">
+                    <div className="absolute inset-0 flex items-center justify-center translate-y-8 group-hover/card:translate-y-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300">
+                      <button
+                        className="  font-semibold text-black uppercase tracking-[0.2em] pb-2 
+                         relative after:absolute after:left-0 after:bottom-1 after:h-0.5 
+                         after:w-full after:bg-black hover:after:bg-[#a8741a] hover:text-[#a8741a]
+                         transition-all duration-300"
+                      >
                         ADD TO CART
                       </button>
                     </div>

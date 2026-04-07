@@ -1,4 +1,5 @@
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -11,12 +12,7 @@ export default function Footer() {
             {/* Logo and About */}
             <div>
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-8 h-8 border-2 border-black flex items-center justify-center font-bold text-lg">
-                  O
-                </div>
-                <span className="text-xl font-black tracking-widest uppercase">
-                  Orolo
-                </span>
+                <img src="/logo.png" alt="Shopverse Logo" />
               </div>
               <p className=" text-gray-500 leading-relaxed mb-6">
                 Orolo Shopify is a dynamic and innovative online store offers
@@ -37,24 +33,24 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3  text-gray-500">
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     News
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Search
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -66,24 +62,24 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3  text-gray-500">
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Collections
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Orders
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Wishlist
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Profile
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -93,17 +89,17 @@ export default function Footer() {
               <h4 className="tracking-widest text-lg font-semibold mb-4 text-black uppercase">
                 Subscribe For Updates
               </h4>
-              <p className=" text-gray-500 mb-6 text-center lg:text-left">
+              <p className=" text-gray-500 mb-6 ">
                 Sign up now and don't miss out on updates on Sale and Special
                 offers again.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 mb-6">
+              <form className="flex flex-col items-start gap-3 mb-6">
                 <input
                   type="email"
                   placeholder="Your email"
                   className="flex-1 px-4 py-2 rounded-md border border-gray-400 bg-transparent text-gray-400 placeholder-gray-500 focus:outline-none"
                 />
-                <a
+                <Link
                   className="
     relative z-10 isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700
     text-left text-yellow-700 uppercase tracking-wide font-semibold
@@ -117,44 +113,42 @@ export default function Footer() {
     before:origin-bottom-left
     before:rotate-[4deg] before:translate-y-[108%] before:-translate-x-4
     before:transition-transform before:duration-200
-    before:[transition-timing-function:cubic-bezier(.17,.67,.83,.67)]
-
     hover:before:rotate-0 hover:before:translate-y-0 hover:before:translate-x-0
     cursor-pointer
   "
                 >
                   Subscribe
-                </a>
+                </Link>
               </form>
               <div className="flex gap-4">
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold transition-all"
+                <Link
+                  to="#"
+                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center primary-yellow hover:text-white transition-all"
                 >
-                  <FaFacebook size={16} />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold transition-all"
+                  <FaFacebook size={22} />
+                </Link>
+                <Link
+                  to="#"
+                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center primary-yellow hover:text-white transition-all"
                 >
-                  <FaTwitter size={16} />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold transition-all"
+                  <FaTwitter size={22} />
+                </Link>
+                <Link
+                  to="#"
+                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center primary-yellow hover:text-white transition-all"
                 >
-                  <FaInstagram size={16} />
-                </a>
+                  <FaInstagram size={22} />
+                </Link>
               </div>
             </div>
           </div>
 
           <div className="pt-8 text-center border-t border-dashed border-neutral-500">
             <p>
-              Copyright &copy; 2025{" "}
-              <a href="/" className="text-yellow-700 hover:underline">
-                Orolo
-              </a>
+              Copyright &copy; 2026{" "}
+              <Link to="/" className="text-yellow-700 hover:underline">
+                Shopverse
+              </Link>
               . All rights reserved
             </p>
           </div>

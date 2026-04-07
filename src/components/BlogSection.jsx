@@ -2,8 +2,24 @@ import { BLOG_POSTS } from "../constants";
 import { MessageSquare } from "lucide-react";
 
 export default function BlogSection() {
+  const blogPosts = [
+    {
+      id: "1",
+      title: "How to Choose the Perfect Watch for Any Occasion",
+      date: "April 11, 2025",
+      comments: 0,
+      image: "/blog2.webp",
+    },
+    {
+      id: "2",
+      title: "Smartwatch vs Traditional Watch: Which One Suits You?",
+      date: "April 11, 2025",
+      comments: 0,
+      image: "/blog3.jpg",
+    },
+  ];
   return (
-    <section className="py-24 relative overflow-hidden bg-white">
+    <section className="py-20 relative overflow-hidden bg-white">
       {/* Diagonal Background Accent */}
       <div
         className="absolute top-0 left-0 w-full h-[60%] bg-[#EEF2F5] opacity-80 -z-10"
@@ -16,18 +32,16 @@ export default function BlogSection() {
 
       <div className="container mx-auto px-4 relative">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <span className="primary-yellow text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
+        <div className="text-center mb-8">
+          <span className="primary-yellow text-[14px] font-semibold uppercase tracking-[0.3em]  block">
             BEHIND OUR TIMEPIECES
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] tracking-tight">
-            From the Watch Journal
-          </h2>
+          <h3>From the Watch Journal</h3>
         </div>
 
         {/* Blog Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {BLOG_POSTS.map((post) => (
+          {blogPosts.map((post) => (
             <div
               key={post.id}
               className="group relative cursor-pointer overflow-hidden aspect-16/10 md:aspect-video shadow-2xl"

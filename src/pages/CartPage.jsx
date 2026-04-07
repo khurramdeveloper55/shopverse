@@ -13,9 +13,40 @@ import {
   Diamond,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "../redux/slices/cartSlice";
 
 export default function CartPage() {
-  const [quantity, setQuantity] = useState(2);
+  const items = useSelector((state) => state?.cart?.items || []);
+  const dispatch = useDispatch();
+
+  const handleIncrease = (id) => {
+    dispatch(increaseQuantity(id));
+  };
+  const handleDecrease = (id) => {
+    dispatch(decreaseQuantity(id));
+  };
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
+  if (items?.length === 0) {
+    return (
+      <main className="grow max-w-7xl mx-auto px-6 py-16">
+        <h1 className="text-4xl font-display font-bold mb-14 tracking-tight">
+          Your Cart
+        </h1>
+        <div className="text-center py-20">
+          <p className="text-2xl text-zinc-400 mb-4">Your cart is empty</p>
+          <p className="text-zinc-500">Add some products from the shop</p>
+        </div>
+      </main>
+    );
+  }
   return (
     <main className="grow max-w-7xl mx-auto px-6 py-16 w-full">
       <h1 className="text-4xl font-display font-bold mb-14 tracking-tight">
@@ -35,54 +66,59 @@ export default function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-zinc-100 group">
-                  <td className="py-10">
-                    <div className="flex gap-8">
-                      <div className="w-28 h-28 bg-zinc-50 rounded-xl overflow-hidden shrink-0 border border-zinc-100">
-                        <img
-                          src="https://picsum.photos/seed/watch/400/400"
-                          alt="Smartwatch"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          referrerPolicy="no-referrer"
-                        />
+                {items?.map((item) => (
+                  <tr className="border-b border-zinc-100 group">
+                    <td className="py-10">
+                      <div className="flex gap-8">
+                        <div className="w-28 h-28 bg-zinc-50 rounded-xl overflow-hidden shrink-0 border border-zinc-100">
+                          <img
+                            src={`${item.images[0].main}`}
+                            alt="Smartwatch"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                        <div className="flex flex-col justify-center max-w-xs">
+                          <h4 className="font-semibold text-zinc-800 leading-snug mb-2 text-lg hover:text-[#c19a6b] cursor-pointer transition-colors text-left">
+                            {item.name}
+                          </h4>
+                          <button
+                            onClick={() => handleRemove(item.id)}
+                            className="text-[11px] font-bold tracking-widest text-zinc-400 hover:text-red-500 transition-colors text-left uppercase underline underline-offset-8 decoration-zinc-200 hover:decoration-red-200"
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex flex-col justify-center max-w-xs">
-                        <h4 className="font-semibold text-zinc-800 leading-snug mb-2 text-lg hover:text-[#c19a6b] cursor-pointer transition-colors text-left">
-                          Smartwatch with Call & Message Notifications S
-                        </h4>
-                        <button className="text-[11px] font-bold tracking-widest text-zinc-400 hover:text-red-500 transition-colors text-left uppercase underline underline-offset-8 decoration-zinc-200 hover:decoration-red-200">
-                          Remove
-                        </button>
+                    </td>
+                    <td className="py-10">
+                      <div className="flex justify-center">
+                        <div className="flex items-center border border-zinc-200 rounded-md px-3 py-2 bg-white shadow-sm">
+                          <button
+                            onClick={() => handleDecrease(item.id)}
+                            className="p-1.5 hover:text-[#c19a6b] transition-colors"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <span className="w-12 text-center text-sm font-bold">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => handleIncrease(item.id)}
+                            className="p-1.5 hover:text-[#c19a6b] transition-colors"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="py-10">
-                    <div className="flex justify-center">
-                      <div className="flex items-center border border-zinc-200 rounded-md px-3 py-2 bg-white shadow-sm">
-                        <button
-                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                          className="p-1.5 hover:text-[#c19a6b] transition-colors"
-                        >
-                          <Minus className="w-3.5 h-3.5" />
-                        </button>
-                        <span className="w-12 text-center text-sm font-bold">
-                          {quantity}
-                        </span>
-                        <button
-                          onClick={() => setQuantity(quantity + 1)}
-                          className="p-1.5 hover:text-[#c19a6b] transition-colors"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-10 text-right">
-                    <span className="text-base font-semibold text-zinc-500">
-                      Rs. 50.00
-                    </span>
-                  </td>
-                </tr>
+                    </td>
+                    <td className="py-10 text-right">
+                      <span className="text-base font-semibold text-zinc-500">
+                        Rs. 50.00
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

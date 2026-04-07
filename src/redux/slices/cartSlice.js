@@ -23,7 +23,7 @@ const cartSlice = createSlice({
     },
     increaseQuantity: (state, action) => {
       const item = state.items.find((item) => item.id === action.payload);
-      if (item && item.quantity > 1) {
+      if (item) {
         item.quantity += 1;
       }
     },

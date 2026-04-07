@@ -13,7 +13,7 @@ export default function Layout({ scrollToTop, showBackToTop }) {
       <Footer />
 
       {/* Side Compare Button */}
-      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-60 flex flex-col items-center">
+      {/* <div className="fixed right-0 top-1/2 -translate-y-1/2 z-60 flex flex-col items-center">
         <div className="bg-[#1a1a1a] text-white py-6 px-2 cursor-pointer flex flex-col items-center gap-4 rounded-l-md shadow-2xl hover:bg-black transition-all duration-300 group/compare active:scale-95">
           <span className="[writing-mode:vertical-lr] font-bold text-[10px] tracking-[0.2em] uppercase py-2">
             Compare
@@ -22,7 +22,7 @@ export default function Layout({ scrollToTop, showBackToTop }) {
             0
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Back to Top Button */}
       <button

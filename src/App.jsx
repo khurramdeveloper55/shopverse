@@ -7,6 +7,7 @@ import { Route } from "react-router-dom";
 import CategoryDetailPage from "./pages/CategoryDetailPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CartPage from "./pages/CartPage";
 
 const queryClient = new QueryClient();
 function App() {
@@ -37,6 +38,7 @@ function App() {
               path="/collections/:categoryName/product/:productName"
               element={<ProductDetailPage />}
             />
+            <Route path="/cart" element={<CartPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

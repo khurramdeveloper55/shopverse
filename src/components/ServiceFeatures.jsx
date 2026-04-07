@@ -20,7 +20,7 @@ export default function ServiceFeatures() {
   ];
 
   const sliderItems = services.map((item) => (
-    <div className="flex items-start bg-[#fafafa] px-4 py-6 my-12">
+    <div className="flex items-start bg-[#fafafa] px-4 py-6 my-20">
       <span className="mr-4 max-w-16">
         <img src={item.img} alt="" />
       </span>

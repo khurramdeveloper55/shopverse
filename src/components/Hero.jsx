@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const slides = [
   {
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1920",
+    image: "/slider-image-1.webp",
     tag: "Timeless Style",
     title: "Discover Watches That Define Elegance",
     description:
       "From classic leather to modern smart designs, explore our curated collection for every wrist.",
+    link: "/collections/luxury-timepieces",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1547996160-81dfa63595dd?auto=format&fit=crop&q=80&w=1920",
-    tag: "Modern Precision",
-    title: "The Future of Timekeeping is Here",
+    image: "/slider-image-2.webp",
+    tag: "Engineered for Precision",
+    title: "Performance Meets Craftsmanship",
     description:
-      "Experience the perfect blend of technology and craftsmanship with our latest smartwatch arrivals.",
+      "Stay ahead of time with durable, high-performance watches, crafted to match your pace and personality.",
+    link: "/collections/minimalist-modern-designs",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&q=80&w=1920",
-    tag: "Limited Edition",
-    title: "Exclusive Designs For Rare Moments",
+    image: "/slider-image-3.webp",
+    tag: "New Arrivals 2026",
+    title: "Fresh Styles Just Landed",
     description:
-      "Each piece in our luxury collection is a masterpiece of precision and aesthetic perfection.",
+      "Unbox the latest trends in men's and women's timepieces. Designed to turn heads and keep you on time.",
+    link: "/collections/classic-leather-strap-watches",
   },
 ];
 
@@ -61,7 +62,7 @@ export default function Hero() {
             <div className="absolute inset-0 bg-black/50"></div>
           </div>
 
-          <div className="container mx-auto px-4 relative h-full flex items-center">
+          <div className="container mx-auto px-8 relative h-full flex items-center">
             <div className="max-w-2xl text-left text-white">
               <span className=" uppercase tracking-[0.3em] text-xs font-semibold mb-6 block animate-fade-in-down">
                 {slide.tag}
@@ -72,13 +73,27 @@ export default function Hero() {
               <p className=" text-lg mb-10 font-light max-w-lg leading-relaxed animate-fade-in-up delay-200">
                 {slide.description}
               </p>
-              <button className="group border border-gold hover:bg-gold transition-all duration-300 px-8 py-4 flex items-center gap-3 uppercase tracking-widest text-xs font-bold animate-fade-in-up delay-300">
-                Shop Now
-                <ChevronRight
-                  size={16}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </button>
+              <Link
+                to={slide.link}
+                className="
+    relative isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700 
+    text-left text-yellow-700 uppercase tracking-wide font-semibold
+    bg-transparent rounded-md transition duration-300
+    hover:text-white
+
+    before:content-[''] before:absolute before:block before:z-0
+    before:bg-yellow-700
+    before:w-[120%] before:h-[110%]
+    before:top-0 before:left-0
+    before:origin-bottom-left
+    before:rotate-[4deg]
+    before:translate-y-[108%] before:-translate-x-4
+    before:transition-transform before:duration-200
+    hover:before:rotate-0 hover:before:translate-y-0 hover:before:translate-x-0
+  "
+              >
+                <span className="relative z-10">Shop Now</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -87,13 +102,13 @@ export default function Hero() {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#a8741a] transition-colors z-20"
       >
         <ChevronLeft size={40} strokeWidth={1} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#a8741a] transition-colors z-20"
       >
         <ChevronRight size={40} strokeWidth={1} />
       </button>
@@ -105,7 +120,9 @@ export default function Hero() {
             key={i}
             onClick={() => setCurrent(i)}
             className={`w-2 h-2 rounded-full cursor-pointer transition-all ${
-              i === current ? "bg-gold w-6" : "bg-white/30 hover:bg-white"
+              i === current
+                ? "bg-primary-yellow w-6"
+                : "bg-white/30 hover:bg-white"
             }`}
           ></div>
         ))}

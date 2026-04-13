@@ -1,11 +1,23 @@
 import { Link } from "react-router-dom";
+import useCategories from "../hooks/useCategories";
+import { motion } from "framer-motion";
 
 export default function BannerAds() {
+  const { categories } = useCategories();
+  const smartwatches = categories?.map((cat) => cat.slug)[3];
+  const timepieces = categories?.map((cat) => cat.slug)[1];
+
   return (
     <section className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* Left Banner */}
       <div className="relative h-[400px] overflow-hidden group">
-        <img
+        <motion.img
+          initial={{ scale: 1.1 }}
+          whileInView={{ scale: 1 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeOut",
+          }}
           src="/featured-image-1.webp"
           alt="Smartwatches"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -19,7 +31,7 @@ export default function BannerAds() {
             Stay ahead with smartwatches built for modern life
           </h2>
           <Link
-            href="#"
+            to={`/collections/${smartwatches}`}
             className="text-[14px] hover:text-gray-200 font-bold uppercase tracking-widest border-b border-white w-fit pb-1 hover:border-gray-200  transition-all"
           >
             View Products
@@ -29,7 +41,13 @@ export default function BannerAds() {
 
       {/* Right Banner */}
       <div className="relative h-[400px] overflow-hidden group">
-        <img
+        <motion.img
+          initial={{ scale: 1.2 }}
+          whileInView={{ scale: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+          }}
           src="/featured-image-2.webp"
           alt="Sport Watches"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -43,7 +61,7 @@ export default function BannerAds() {
             Rugged timepieces ready for your next challenge
           </h2>
           <Link
-            href="#"
+            to={`/collections/${timepieces}`}
             className="text-[14px] hover:text-gray-200 font-bold uppercase tracking-widest border-b border-white w-fit pb-1 hover:border-gray-200  transition-all"
           >
             Shop Now

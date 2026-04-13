@@ -2,11 +2,32 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { ChevronUp } from "lucide-react";
 import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import CartSidebar from "./CartSidebar";
 
-export default function Layout({ scrollToTop, showBackToTop }) {
+export default function Layout() {
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Header />
+      <Header setIsMobileCartOpen={setIsMobileCartOpen} />
+      <CartSidebar
+        isOpen={isMobileCartOpen}
+        onClose={() => setIsMobileCartOpen(false)}
+      />
       <main>
         <Outlet />
       </main>

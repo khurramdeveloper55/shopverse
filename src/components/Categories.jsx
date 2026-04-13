@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import useCategories from "../hooks/useCategories";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Categories() {
-  const { categories = [], isLoading } = useCategories();
+  const { categories = [] } = useCategories();
 
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(6);
@@ -43,8 +44,6 @@ export default function Categories() {
     startIndex + itemsToShow,
   );
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <section className="py-20 bg-white relative overflow-hidden group/section">
       <div className="container mx-auto px-4">
@@ -61,9 +60,16 @@ export default function Categories() {
           {/* Categories Row */}
           <div className="flex-1 flex gap-x-6 overflow-hidden">
             {visibleCategories.map((cat, i) => (
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                }}
                 key={`${cat.name}-${startIndex}-${i}`}
-                className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] transition-all duration-500 transform animate-fade-in"
+                className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] "
               >
                 <Link to={`/collections/${cat.slug}`}>
                   <div className="group cursor-pointer flex flex-col items-center">
@@ -132,7 +138,7 @@ export default function Categories() {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

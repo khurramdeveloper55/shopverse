@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { RELATED_PRODUCTS } from "../constants";
-import { ShoppingCart, Eye } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 
-export default function Tabs({ product }) {
+export default function Tabs({ product, products }) {
+  const { categoryName } = useParams();
   const [activeTab, setActiveTab] = useState("Description");
 
+  if (!product || !products) return null;
+
   return (
-    <div className="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-16 border-t border-gray-100">
+    <div className="container mx-auto px-4 py-12 mt-12 flex flex-col lg:flex-row gap-16 border-t border-gray-100">
       {/* Left: Tabbed Content */}
       <div className="lg:w-2/3">
         <div className="flex border-b border-gray-100 gap-8 mb-8 overflow-x-auto no-scrollbar">
@@ -70,34 +72,35 @@ export default function Tabs({ product }) {
           Related Products
         </h3>
         <div className="space-y-8">
-          <div key={product.id} className="group flex gap-4 text-left">
-            <div className="relative w-24 h-28 shrink-0 bg-gray-100 rounded overflow-hidden">
-              <img
-                src={product.images[0].main}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                alt={product.name}
-              />
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
-                  <ShoppingCart className="w-3 h-3" />
-                </button>
-                <button className="bg-white p-2 rounded-full hover:bg-black hover:text-white transition-colors">
-                  <Eye className="w-3 h-3" />
-                </button>
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="group flex gap-4 text-left open-sans"
+            >
+              <div className="relative w-24 h-28 shrink-0 bg-gray-100 rounded overflow-hidden">
+                <img
+                  src={product.images[0].main}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  alt={product.name}
+                />
+              </div>
+              <div className="flex flex-col justify-center">
+                <p className="text-[14px] text-gray-500 font-semibold! tracking-[0.3em] uppercase rajdhani-medium mb-1">
+                  {product.vendor}
+                </p>
+                <Link
+                  to={`/collections/${categoryName}/product/${product.slug}`}
+                >
+                  <h4 className="text-sm font-semibold text-gray-800 mb-2 leading-snug hover:text-[#a8741a] cursor-pointer">
+                    {product.name}
+                  </h4>
+                </Link>
+                <p className="text-sm font-semibold text-gray-900">
+                  Rs. {product.price}
+                </p>
               </div>
             </div>
-            <div className="flex flex-col justify-center">
-              <p className="text-sm text-gray-400 font-bold uppercase tracking-wider mb-1">
-                {product.vendor}
-              </p>
-              <h4 className="text-sm font-semibold text-gray-800 mb-2 leading-snug hover:text-[#BFA07A] cursor-pointer">
-                {product.name}
-              </h4>
-              <p className="text-sm font-semibold text-gray-900">
-                Rs. {product.price}
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

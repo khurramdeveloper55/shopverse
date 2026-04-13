@@ -1,5 +1,4 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -8,28 +7,65 @@ import CategoryDetailPage from "./pages/CategoryDetailPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CartPage from "./pages/CartPage";
+import WishlistPage from "./pages/WishlistPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import Collections from "./pages/Collections";
+import ScrollToTop from "./components/ScrollToTop";
+import GlobalLoader from "./components/GlobalLoader";
+import { useDispatch } from "react-redux";
+import { startLoading, stopLoading } from "./redux/slices/loadingSlice";
+import { useEffect } from "react";
 
-const queryClient = new QueryClient();
-function App() {
-  const [showBackToTop, setShowBackToTop] = useState(false);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+});
+
+function ReactQueryLoaderHandler() {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
+      const isAnyQueryLoading = Array.from(
+        queryClient.getQueryCache().findAll(),
+      ).some(
+        (query) =>
+          query.state.status === "loading" ||
+          query.state.fetchStatus === "fetching",
+      );
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+      if (isAnyQueryLoading) {
+        dispatch(startLoading());
+      } else {
+        dispatch(stopLoading());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
+  return null;
+}
+
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <GlobalLoader />
+      <ReactQueryLoaderHandler />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/collections" element={<Collections />} />
             <Route
               path="/collections/:categoryName"
               element={<CategoryDetailPage />}
@@ -38,7 +74,14 @@ function App() {
               path="/collections/:categoryName/product/:productName"
               element={<ProductDetailPage />}
             />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
+import Button from "./Button";
+import useCategories from "../hooks/useCategories";
+
 export default function FeaturedSection() {
+  const { categories } = useCategories();
+  const catLink = categories?.map((cat) => cat.slug)[3];
+
   return (
     <section className="relative w-full min-h-[500px] md:h-[550px] flex items-center bg-[#f4f4f4] overflow-hidden">
       {/* Background Image - Top down watch on light texture */}
@@ -31,26 +37,8 @@ export default function FeaturedSection() {
             everyday style. From classic analog to cutting-edge smartwatches —
             time has never looked this good.
           </p>
-          <Link
-            to="#"
-            className="
-    relative overflow-hidden inline-block px-[35px] py-3 border border-primary-yellow 
-    text-left primary-yellow uppercase tracking-wide font-semibold
-    bg-transparent rounded-md transition duration-300
-    hover:text-white
-
-    before:content-[''] before:absolute before:block before:-z-10
-    before:bg-primary-yellow
-    before:w-[120%] before:h-[110%]
-    before:top-0 before:left-0 before:right-0 before:bottom-0
-    before:origin-bottom-left
-    before:rotate-[4deg]
-    before:translate-y-[108%] before:-translate-x-4
-    before:transition-transform before:duration-200
-    hover:before:rotate-0 hover:before:translate-y-0 hover:before:translate-x-0
-  "
-          >
-            Discover Now
+          <Link to={`/collections/${catLink}`}>
+            <Button>Discover Now</Button>
           </Link>
         </div>
       </div>

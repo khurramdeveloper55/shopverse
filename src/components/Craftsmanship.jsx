@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import useCategories from "../hooks/useCategories";
+import Button from "./Button";
 
 export default function Craftsmanship() {
+  const { categories } = useCategories();
+  const catLink = categories?.map((cat) => cat.slug)[1];
   return (
     <section>
       <div className="container xl:mx-auto mx-8 flex flex-col md:flex-row items-center gap-12">
@@ -44,26 +48,8 @@ export default function Craftsmanship() {
             </p>
 
             <div className="mt-5">
-              <Link
-                to="#"
-                className="
-    relative isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700 
-    text-left text-yellow-700 uppercase tracking-wide font-semibold
-    bg-transparent rounded-md transition duration-300
-    hover:text-white
-
-    before:content-[''] before:absolute before:block before:z-0
-    before:bg-yellow-700
-    before:w-[120%] before:h-[110%]
-    before:top-0 before:left-0
-    before:origin-bottom-left
-    before:rotate-[4deg]
-    before:translate-y-[108%] before:-translate-x-4
-    before:transition-transform before:duration-200
-    hover:before:rotate-0 hover:before:translate-y-0 hover:before:translate-x-0
-  "
-              >
-                <span className="relative z-10">Shop Now</span>
+              <Link to={`/collections/${catLink}`}>
+                <Button>Shop Now</Button>
               </Link>
             </div>
           </div>

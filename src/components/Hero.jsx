@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Button from "./Button";
 
 const slides = [
   {
@@ -73,26 +74,8 @@ export default function Hero() {
               <p className=" text-lg mb-10 font-light max-w-lg leading-relaxed animate-fade-in-up delay-200">
                 {slide.description}
               </p>
-              <Link
-                to={slide.link}
-                className="
-    relative isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700 
-    text-left text-yellow-700 uppercase tracking-wide font-semibold
-    bg-transparent rounded-md transition duration-300
-    hover:text-white
-
-    before:content-[''] before:absolute before:block before:z-0
-    before:bg-yellow-700
-    before:w-[120%] before:h-[110%]
-    before:top-0 before:left-0
-    before:origin-bottom-left
-    before:rotate-[4deg]
-    before:translate-y-[108%] before:-translate-x-4
-    before:transition-transform before:duration-200
-    hover:before:rotate-0 hover:before:translate-y-0 hover:before:translate-x-0
-  "
-              >
-                <span className="relative z-10">Shop Now</span>
+              <Link to={slide.link}>
+                <Button>Shop Now</Button>
               </Link>
             </div>
           </div>

@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Eye, Heart, ChevronLeft, ChevronRight, Repeat } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/slices/cartSlice";
+import { useState, useEffect, useCallback } from "react";
+import { Eye, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import useProducts from "../hooks/useProducts";
+import useCartSelector from "../hooks/useCartSelector";
+import useWishlistSelector from "../hooks/useWishlistSelector";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
+import QuickViewModal from "./QuickViewModal";
+import useQuickView from "../hooks/useQuickView";
 
 export default function ProductGrid() {
-  const { products = [], isLoading } = useProducts();
-  const limitedProducts = products.slice(0, 8);
+  const { products = [] } = useProducts();
+  const limitedProducts = Array.isArray(products) ? products.slice(0, 8) : [];
 
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerRow, setItemsPerRow] = useState(3);
+  const { selectedProduct, openQuickView, closeQuickView } = useQuickView();
 
   const isDesktop = itemsPerRow === 4;
   const totalVisible = isDesktop ? 8 : 4;
@@ -55,8 +59,6 @@ export default function ProductGrid() {
   const firstRow = displayedItems.slice(0, itemsPerRow);
   const secondRow = displayedItems.slice(itemsPerRow, totalVisible);
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <section className="py-20 bg-white relative group/slider">
       <div className="container mx-auto px-4">
@@ -97,6 +99,7 @@ export default function ProductGrid() {
               <ProductCard
                 key={`r1-${product.id}-${startIndex}-${i}`}
                 product={product}
+                openQuickView={openQuickView}
               />
             ))}
           </div>
@@ -106,6 +109,7 @@ export default function ProductGrid() {
               <ProductCard
                 key={`r2-${product.id}-${startIndex}-${i}`}
                 product={product}
+                openQuickView={openQuickView}
               />
             ))}
           </div>
@@ -125,15 +129,19 @@ export default function ProductGrid() {
           </div>
         )}
       </div>
+      <QuickViewModal
+        product={selectedProduct}
+        isOpen={!!selectedProduct}
+        onClose={closeQuickView}
+      />
     </section>
   );
 }
 
-const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-  const handleAddToCart = () => {
-    dispatch(addToCart(product));
-  };
+const ProductCard = ({ product, openQuickView }) => {
+  const { isInCart, handleAddToCart } = useCartSelector(product);
+  const { isInWishlist, handleToggleWishlist } = useWishlistSelector(product);
+
   return (
     <div className="group flex flex-col items-center animate-fade-in relative">
       {/* Image Area */}
@@ -153,30 +161,42 @@ const ProductCard = ({ product }) => {
         />
 
         {/* Hover Action Icons */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 z-9999">
-          <button
-            className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
-             shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
-             transition-all duration-200 hover:scale-110"
+        <div className="absolute top-6 left-0 right-4 flex flex-col items-end gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 z-40">
+          <motion.button
+            onClick={handleToggleWishlist}
+            whileTap={{ scale: 0.85 }}
+            animate={{
+              scale: isInWishlist ? [1, 1.2, 1] : [1, 0.9, 1],
+            }}
+            transition={{
+              duration: 0.35,
+              ease: "easeInOut",
+            }}
+            className={`w-10 h-10 flex items-center justify-center rounded-full shadow-sm transition-all duration-200 ${
+              isInWishlist
+                ? "bg-primary-yellow text-white"
+                : "bg-white text-gray-700 hover:bg-[#a8741a] hover:text-white"
+            }`}
             title="Add to Wishlist"
           >
-            <Heart size={18} />
-          </button>
+            <motion.div
+              animate={{
+                scale: isInWishlist ? [1, 1.25, 1] : [1, 0.9, 1],
+                rotate: isInWishlist ? [0, -8, 8, 0] : 0,
+              }}
+              transition={{ duration: 0.35 }}
+            >
+              <Heart size={18} fill={isInWishlist ? "currentColor" : "none"} />
+            </motion.div>
+          </motion.button>
           <button
+            onClick={() => openQuickView(product)}
             className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
              shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
              transition-all duration-200 hover:scale-110"
             title="Quick View"
           >
             <Eye size={18} />
-          </button>
-          <button
-            className="w-10 h-10 flex items-center justify-center bg-white rounded-full 
-             shadow-sm text-gray-700 hover:bg-[#a8741a] hover:text-white 
-             transition-all duration-200 hover:scale-110"
-            title="Compare"
-          >
-            <Repeat size={18} />
           </button>
         </div>
       </div>
@@ -219,12 +239,16 @@ const ProductCard = ({ product }) => {
           <div className="absolute inset-0 flex items-center justify-center translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
             <button
               onClick={handleAddToCart}
-              className="  font-semibold text-black uppercase tracking-[0.2em] pb-2 
-                         relative after:absolute after:left-0 after:bottom-1 after:h-0.5 
-                         after:w-full after:bg-black hover:after:bg-[#a8741a] hover:text-[#a8741a]
-                         transition-all duration-300"
+              className={`font-semibold uppercase tracking-[0.2em] pb-2 relative transition-all duration-300
+    ${
+      isInCart
+        ? "text-[#a8741a] after:bg-[#a8741a]"
+        : "text-black after:bg-black hover:text-[#a8741a] hover:after:bg-[#a8741a]"
+    }
+    after:absolute after:left-0 after:bottom-1 after:h-0.5 after:w-full
+  `}
             >
-              ADD TO CART
+              {isInCart ? "ADDED ✓" : "ADD TO CART"}
             </button>
           </div>
         </div>

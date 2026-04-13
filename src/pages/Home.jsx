@@ -7,7 +7,6 @@ import ElegantSlider from "../components/ElegantSlider";
 import Craftsmanship from "../components/Craftsmanship";
 import ServiceFeatures from "../components/ServiceFeatures";
 import Testimonials from "../components/Testimonials";
-import BlogSection from "../components/BlogSection";
 
 export default function Home() {
   return (
@@ -48,7 +47,6 @@ export default function Home() {
       </section>
 
       <Testimonials />
-      <BlogSection />
     </>
   );
 }

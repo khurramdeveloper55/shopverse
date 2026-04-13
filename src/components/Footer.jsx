@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       {/* FOOTER GPT */}
 
-      <footer className="border-t border-gray-100 pt-20 pb-10 bg-stone-200 text-neutral-500 text-base open-sans text-left">
+      <footer className="border-t border-gray-100 pt-20 pb-10 bg-[#f3eeed] text-neutral-500 text-base open-sans text-left">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             {/* Logo and About */}
@@ -33,23 +33,24 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3  text-gray-500">
                 <li>
-                  <Link to="#" className="hover:underline">
-                    News
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="hover:underline">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="hover:underline">
+                  <Link
+                    to="/privacy-policy"
+                    className="hover:underline font-normal!"
+                  >
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
-                    Search
+                  <Link
+                    to="/terms-and-conditions"
+                    className="hover:underline font-normal!"
+                  >
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="hover:underline font-normal!">
+                    Contact
                   </Link>
                 </li>
               </ul>
@@ -58,27 +59,25 @@ export default function Footer() {
             {/* Links Column 2 */}
             <div>
               <h4 className="tracking-widest text-lg font-semibold mb-4 text-black uppercase">
-                Support
+                Quick Links
               </h4>
               <ul className="space-y-3  text-gray-500">
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link
+                    to="/collections"
+                    className="hover:underline  font-normal!"
+                  >
                     Collections
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
-                    Orders
+                  <Link to="/cart" className="hover:underline font-normal!">
+                    Cart
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:underline">
+                  <Link to="/wishlist" className="hover:underline font-normal!">
                     Wishlist
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="hover:underline">
-                    Profile
                   </Link>
                 </li>
               </ul>

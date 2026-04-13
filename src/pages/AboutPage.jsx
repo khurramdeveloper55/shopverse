@@ -25,9 +25,9 @@ export default function AboutPage() {
       <section className="container-custom pb-12 max-w-[1200px] mx-auto md:px-0 px-4">
         <div className="text-center mb-10">
           <span className="primary-yellow text-[14px] uppercase tracking-[0.3em] font-semibold">
-            Passionate
+            Timeless
           </span>
-          <h3>Empowering Businesses Large and Small.</h3>
+          <h3>Elevating Style Through Watches and Beyond.</h3>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -59,12 +59,14 @@ export default function AboutPage() {
             className="space-y-8"
           >
             <span className="text-black text-[14px] uppercase tracking-[0.3em] font-semibold">
-              A home that looks good and makes you feel good too
+              A watch that looks exceptional and feels timeless too
             </span>
             <p className="text-2xl md:text-3xl font-semibold leading-snug mt-12">
-              Introduce your company with a broad vision statement. The viewer
-              should come away with a strong sense of what your company stands
-              for, and what it is trying to achieve.
+              Introduce ShopVerse through a bold vision of timeless style and
+              everyday elegance. Visitors should instantly understand our
+              passion for premium watches, exceptional quality, and our
+              commitment to helping every customer express confidence through
+              sophisticated timepieces.
             </p>
           </motion.div>
         </div>
@@ -75,16 +77,16 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-3 gap-12">
           {[
             {
-              val: "2011",
-              desc: "A modest number to start off the metrics section.",
+              val: "2019",
+              desc: "The year ShopVerse began its journey in premium watches.",
             },
             {
-              val: "20k",
-              desc: "That's a massive increase over previous performance.",
+              val: "20K+",
+              desc: "Satisfied customers who trust our style and quality.",
             },
             {
-              val: "$100M",
-              desc: "This is a larger number than the other two numbers.",
+              val: "100+",
+              desc: "Exclusive watch designs and collections available.",
             },
           ].map((stat, i) => (
             <motion.div
@@ -114,14 +116,15 @@ export default function AboutPage() {
             Our Values
           </span>
           <h2 className="text-2xl md:text-3xl font-semibold mb-6 leading-tight mt-4 text-neutral-950">
-            Established in 2017, by husband and wife team Rob and Frankie, Hutch
-            specialises in helping you bring the perfect houseplants home.
+            Established in 2019, ShopVerse was built with a passion for timeless
+            craftsmanship and modern style, dedicated to helping customers find
+            the perfect watch for every moment.
           </h2>
           <h2 className="text-2xl md:text-3xl font-semibold mb-6 leading-tight mt-4 text-neutral-950">
-            Born out of a passion for all things botanical and Frankie's love of
-            planting up terrariums, Hutch began life as a short term pop up shop
-            in Exeter's city centre. The aim was simple; create a jungle
-            bursting with exotic foliage right in the centre of a bustling city.
+            Born from a love for precision design and elegant fashion, ShopVerse
+            began with a simple vision: to bring premium watches that combine
+            luxury, quality, and everyday confidence to watch enthusiasts
+            everywhere.
           </h2>
           <div className="flex justify-center"></div>
         </div>
@@ -132,14 +135,14 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-3 gap-12 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl font-semibold leading-tight">
-              We're leading development for modern teams.
+              We’re setting new standards in modern watch fashion.
             </h2>
           </div>
           <div className="text-center space-y-6">
             <h2 className="text-6xl font-semibold tracking-tighter">44%</h2>
             <p className="text-lg text-gray-500 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Vestibulum libero.
+              Customer satisfaction growth driven by quality, trust, and
+              timeless craftsmanship.
             </p>
             <div className="flex justify-center"></div>
           </div>
@@ -167,16 +170,17 @@ export default function AboutPage() {
           </div>
           <div className="space-y-8">
             <h2 className="text-4xl font-semibold leading-tight">
-              Over 40% traffic improvements
+              Over 40% customer growth achieved
             </h2>
             <p className="text-lg text-gray-500 leading-relaxed">
-              We are humans helping other humans succeed, and we believe that
-              transparency is the key to forging lasting relationships.
+              At ShopVerse, we believe every watch tells a story. Our commitment
+              to quality, elegance, and customer trust helps people find
+              timeless pieces that match their style and confidence.
             </p>
             <div className="pt-8">
               <p className="text-2xl font-semibold">Rikke Thomsen</p>
               <p className="text-md font-semibold tracking-widest uppercase text-neutral-950 mt-1">
-                CEO & CTO
+                FOUNDER & CEO
               </p>
             </div>
           </div>
@@ -189,19 +193,19 @@ export default function AboutPage() {
           <div className="space-y-12">
             <div>
               <span className="primary-yellow text-[14px] uppercase tracking-[0.3em] font-semibold">
-                Commencer
+                SHOPVERSE
               </span>
               <h2 className="text-4xl font-semibold leading-tight">
-                Il n'a jamais été aussi facile de gérer ses finances
+                Timeless watches made for every style
               </h2>
             </div>
 
             <div className="grid grid-cols-2 gap-x-12 gap-y-16">
               {[
-                { val: "98%", label: "Satisfaction des clients" },
-                { val: "205M+", label: "Utilisateurs actifs mensuels" },
-                { val: "100K+", label: "Nouveaux utilisateurs par semaine" },
-                { val: "55%", label: "Croissance d'une année sur l'autre" },
+                { val: "98%", label: "Customer satisfaction rate" },
+                { val: "20K+", label: "Happy customers worldwide" },
+                { val: "100+", label: "Premium watch collections" },
+                { val: "55%", label: "Year-over-year growth" },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <h3 className="text-3xl font-semibold!">{item.val}</h3>

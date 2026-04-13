@@ -25,7 +25,7 @@ export default function ProductSection({ product }) {
   const dispatch = useDispatch();
   const { isInCart, handleAddToCart } = useCartSelector(product);
   const cart = useSelector((state) => state?.cart?.items || []);
-  const cartItem = cart.find((item) => item?.id === product.id);
+  const cartItem = cart.find((item) => item?.id === product?.id);
   const [localQuantity, setLocalQuantity] = useState(1);
 
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function ProductSection({ product }) {
             <div className="flex items-center border border-gray-200 rounded-sm">
               <button
                 onClick={() => handleDecrease(product.id)}
-                className="p-3 hover:text-gold transition-colors"
+                className="p-3 transition-colors"
               >
                 <Minus size={16} />
               </button>
@@ -172,7 +172,7 @@ export default function ProductSection({ product }) {
               </span>
               <button
                 onClick={() => handleIncrease(product.id)}
-                className="p-3 hover:text-gold transition-colors"
+                className="p-3 transition-colors"
               >
                 <Plus size={16} />
               </button>

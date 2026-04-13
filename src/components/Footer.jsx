@@ -28,7 +28,7 @@ export default function Footer() {
 
             {/* Links Column 1 */}
             <div>
-              <h4 className=" tracking-widest text-lg font-semibold mb-4 text-black uppercase">
+              <h4 className="   text-lg font-semibold mb-4 text-black uppercase">
                 Information
               </h4>
               <ul className="space-y-3  text-gray-500">
@@ -58,7 +58,7 @@ export default function Footer() {
 
             {/* Links Column 2 */}
             <div>
-              <h4 className="tracking-widest text-lg font-semibold mb-4 text-black uppercase">
+              <h4 className="  text-lg font-semibold mb-4 text-black uppercase">
                 Quick Links
               </h4>
               <ul className="space-y-3  text-gray-500">
@@ -85,7 +85,7 @@ export default function Footer() {
 
             {/* Newsletter */}
             <div>
-              <h4 className="tracking-widest text-lg font-semibold mb-4 text-black uppercase">
+              <h4 className="  text-lg font-semibold mb-4 text-black uppercase">
                 Subscribe For Updates
               </h4>
               <p className=" text-gray-500 mb-6 ">

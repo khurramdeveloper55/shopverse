@@ -102,7 +102,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                 <div className="flex items-center border border-gray-200 rounded-sm">
                   <button
                     onClick={() => handleDecrease(product.id)}
-                    className="p-3 hover:text-gold transition-colors"
+                    className="p-3 transition-colors"
                   >
                     <Minus size={16} />
                   </button>
@@ -111,7 +111,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                   </span>
                   <button
                     onClick={() => handleIncrease(product.id)}
-                    className="p-3 hover:text-gold transition-colors"
+                    className="p-3 transition-colors"
                   >
                     <Plus size={16} />
                   </button>

@@ -9,7 +9,6 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
-import Button from "../components/Button";
 import { Link } from "react-router-dom";
 
 export default function ContactPage() {
@@ -248,10 +247,6 @@ export default function ContactPage() {
                   Sunday, 11am - 5pm
                 </p>
               </div>
-
-              <Button className="flex! gap-1 items-center">
-                <MapPin className="w-3 h-3" /> <span>GET DIRECTIONS</span>
-              </Button>
             </div>
           </div>
         </div>

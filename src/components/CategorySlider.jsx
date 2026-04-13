@@ -41,7 +41,7 @@ export default function () {
         className="flex gap-6 overflow-x-auto pb-8 no-scrollbar scroll-smooth"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {categories.map((cat) => (
+        {categories?.map((cat) => (
           <a href={`/collections/${cat.slug}`}>
             <div
               key={cat.id}

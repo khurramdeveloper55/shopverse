@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TESTIMONIALS } from "../constants";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Testimonials() {
@@ -88,7 +87,7 @@ export default function Testimonials() {
         <div className="flex items-center gap-4">
           <button
             onClick={prev}
-            className="hidden md:block bg-white p-3 rounded-full shadow-lg text-gray-400 hover:text-gold transition-colors z-20"
+            className="hidden md:block bg-white p-3 rounded-full shadow-lg text-gray-400 transition-colors z-20"
           >
             <ChevronLeft size={24} />
           </button>
@@ -131,7 +130,7 @@ export default function Testimonials() {
 
           <button
             onClick={next}
-            className="hidden md:block bg-white p-3 rounded-full shadow-lg text-gray-400 hover:text-gold transition-colors z-20"
+            className="hidden md:block bg-white p-3 rounded-full shadow-lg text-gray-400  transition-colors z-20"
           >
             <ChevronRight size={24} />
           </button>

@@ -30,7 +30,7 @@ export default function Home() {
         {/* Gradient overlay (like ::before) */}
         <div className="absolute inset-0 z-10 opacity-75 bg-linear-to-r from-[#111111] to-transparent"></div>
         <div className="relative container z-30 mx-auto px-4 flex flex-col md:flex-row items-center justify-start gap-8 text-center md:text-left">
-          <div className="text-5xl text-white md:text-6xl font-serif text-gold font-bold">
+          <div className="text-5xl text-white md:text-6xl font-serif font-bold">
             30%
           </div>
           <div className=" text-white text-left max-w-lg">

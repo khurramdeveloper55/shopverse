@@ -1,4 +1,3 @@
-import { BLOG_POSTS } from "../constants";
 import { MessageSquare } from "lucide-react";
 
 export default function BlogSection() {
@@ -53,7 +52,6 @@ export default function BlogSection() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               />
 
-              {/* Dark Overlay with Gradient for Text Readability */}
               <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-500 group-hover:from-black"></div>
 
               {/* Text Content Overlay */}

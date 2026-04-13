@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Eye, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 export default function Recommendations({ products }) {
   const { categoryName } = useParams();

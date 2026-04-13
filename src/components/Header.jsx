@@ -1,13 +1,4 @@
-import {
-  Search,
-  User,
-  Heart,
-  ShoppingBag,
-  X,
-  Plus,
-  ChevronDown,
-  Menu,
-} from "lucide-react";
+import { Search, User, Heart, ShoppingBag, X, Menu } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
@@ -19,7 +10,6 @@ export default function Header({ setIsMobileCartOpen }) {
   const { categories } = useCategories();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const catLink = categories?.map((cat) => cat.slug)[3];
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
@@ -50,7 +40,7 @@ export default function Header({ setIsMobileCartOpen }) {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <button
             onClick={() => setIsMenuOpen(true)}
-            className="hover:text-gold transition-colors lg:hidden flex"
+            className=" transition-colors lg:hidden flex"
           >
             <Menu className="w-4 h-4 lg:w-5 lg:h-5" strokeWidth={1.5} />
           </button>
@@ -63,27 +53,29 @@ export default function Header({ setIsMobileCartOpen }) {
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-bold tracking-[0.2em] uppercase">
             <Link
               to="/"
-              className={`pb-1 transition-colors hover:text-gold ${
+              className={`pb-1 transition-colors hover-text-[#a8741a] ${
                 isActive("/")
-                  ? "text-gold border-b-2 border-gold"
-                  : "hover:text-gold"
+                  ? "primary-yellow border-b-2 border-[#a8741a]"
+                  : ""
               }`}
             >
               Home
             </Link>
             <Link
               to="/about"
-              className={`pb-1 transition-colors hover:text-gold ${
-                isActive("/about") ? "text-gold border-b-2 border-gold" : ""
+              className={`pb-1 transition-colors hover-text-[#a8741a] ${
+                isActive("/about")
+                  ? "primary-yellow border-b-2 border-[#a8741a]"
+                  : ""
               }`}
             >
               About
             </Link>
             <Link
               to="/collections"
-              className={`pb-1 transition-colors hover:text-gold ${
+              className={`pb-1 transition-colors hover-text-[#a8741a] ${
                 location.pathname === "/collections"
-                  ? "text-gold border-b-2 border-gold"
+                  ? "primary-yellow border-b-2 border-[#a8741a]"
                   : ""
               }`}
             >
@@ -92,9 +84,9 @@ export default function Header({ setIsMobileCartOpen }) {
 
             <Link
               to={`/collections/${catLink}`}
-              className={`pb-1 transition-colors hover:text-gold ${
+              className={`pb-1 transition-colors hover-text-[#a8741a] ${
                 location.pathname === `/collections/${catLink}`
-                  ? "text-gold border-b-2 border-gold"
+                  ? "primary-yellow border-b-2 border-[#a8741a]"
                   : ""
               }`}
             >
@@ -102,8 +94,10 @@ export default function Header({ setIsMobileCartOpen }) {
             </Link>
             <Link
               to="/contact"
-              className={`pb-1 transition-colors hover:text-gold ${
-                isActive("/contact") ? "text-gold border-b-2 border-gold" : ""
+              className={`pb-1 transition-colors hover-text-[#a8741a] ${
+                isActive("/contact")
+                  ? "primary-yellow border-b-2 border-[#a8741a]"
+                  : ""
               }`}
             >
               Contact
@@ -112,14 +106,14 @@ export default function Header({ setIsMobileCartOpen }) {
 
           {/* Icons */}
           <div className="flex items-center gap-1">
-            <button className="hover:text-gold transition-colors  lg:px-3.5 lg:py-2.5 py-2.5 px-2">
+            {/* <button className="hover-text-[#a8741a] transition-colors  lg:px-3.5 lg:py-2.5 py-2.5 px-2">
               <Search className="w-4 h-4 md:w-6 md:h-6" strokeWidth={1.5} />
             </button>
-            <button className="hover:text-gold transition-colors  lg:px-3.5 lg:py-2.5 py-2.5 px-2">
+            <button className="hover-text-[#a8741a] transition-colors  lg:px-3.5 lg:py-2.5 py-2.5 px-2">
               <User className="w-4 h-4 md:w-6 md:h-6" strokeWidth={1.5} />
-            </button>
+            </button> */}
             <Link to="/wishlist">
-              <button className="hover:text-gold transition-colors relative lg:px-3.5 lg:py-2.5 py-2.5 px-2">
+              <button className="hover-text-[#a8741a] transition-colors relative lg:px-3.5 lg:py-2.5 py-2.5 px-2">
                 <Heart className="w-4 h-4 lg:w-6 md:h-6" strokeWidth={1.5} />
                 <span className="absolute md:top-5 top-4 md:right-1 right-0 bg-primary-yellow text-white text-[10px] rounded-full md:w-5 md:h-5 w-4 h-4 flex items-center justify-center font-bold">
                   {wishlistCount}
@@ -128,7 +122,7 @@ export default function Header({ setIsMobileCartOpen }) {
             </Link>
             <button
               onClick={() => setIsMobileCartOpen(true)}
-              className="hover:text-gold transition-colors flex items-center gap-2  lg:px-3.5 lg:py-2.5 py-2.5 px-2"
+              className="hover-text-[#a8741a] transition-colors flex items-center gap-2  lg:px-3.5 lg:py-2.5 py-2.5 px-2"
             >
               <div className="relative">
                 <ShoppingBag
@@ -136,7 +130,7 @@ export default function Header({ setIsMobileCartOpen }) {
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="text-[11px] font-bold tracking-widest hidden sm:block">
+              <span className="text-[11px] font-bold tracking-widest">
                 ({cartCount})
               </span>
             </button>
@@ -168,7 +162,7 @@ export default function Header({ setIsMobileCartOpen }) {
               <div className="absolute top-6 right-4 z-10">
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  className=" hover:text-gold transition-colors"
+                  className=" hover-text-[#a8741a] transition-colors"
                 >
                   <X className="w-5 h-5" strokeWidth={1.5} />
                 </button>
@@ -178,12 +172,12 @@ export default function Header({ setIsMobileCartOpen }) {
               <div className="flex-1 min-h-0 overflow-y-auto">
                 <div className="flex flex-col pt-12">
                   <div>
-                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover:text-gold transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover-text-[#a8741a] transition-colors cursor-pointer">
                       <Link
                         to="/"
-                        className={`pb-1 transition-colors hover:text-gold ${
+                        className={`pb-1 transition-colors hover-text-[#a8741a] ${
                           isActive("/")
-                            ? "text-gold border-b-2 border-gold"
+                            ? "primary-yellow border-b-2 border-[#a8741a]"
                             : ""
                         }`}
                       >
@@ -191,24 +185,24 @@ export default function Header({ setIsMobileCartOpen }) {
                       </Link>
                     </div>
 
-                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover:text-gold transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover-text-[#a8741a] transition-colors cursor-pointer">
                       <Link
                         to="/about"
-                        className={`pb-1 transition-colors hover:text-gold ${
+                        className={`pb-1 transition-colors hover-text-[#a8741a] ${
                           isActive("/about")
-                            ? "text-gold border-b-2 border-gold"
+                            ? "primary-yellow border-b-2 border-[#a8741a]"
                             : ""
                         }`}
                       >
                         <span className="flex items-center gap-2">About</span>
                       </Link>
                     </div>
-                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover:text-gold transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover-text-[#a8741a] transition-colors cursor-pointer">
                       <Link
                         to="/collections"
-                        className={`pb-1 transition-colors hover:text-gold ${
+                        className={`pb-1 transition-colors hover-text-[#a8741a] ${
                           location.pathname === "/collections"
-                            ? "text-gold border-b-2 border-gold"
+                            ? "primary-yellow border-b-2 border-[#a8741a]"
                             : ""
                         }`}
                       >
@@ -217,12 +211,12 @@ export default function Header({ setIsMobileCartOpen }) {
                         </span>
                       </Link>
                     </div>
-                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover:text-gold transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover-text-[#a8741a] transition-colors cursor-pointer">
                       <Link
                         to={`/collections/${catLink}`}
-                        className={`pb-1 transition-colors hover:text-gold ${
+                        className={`pb-1 transition-colors hover-text-[#a8741a] ${
                           location.pathname === `/collections/${catLink}`
-                            ? "text-gold border-b-2 border-gold"
+                            ? "primary-yellow border-b-2 border-[#a8741a]"
                             : ""
                         }`}
                       >
@@ -231,12 +225,12 @@ export default function Header({ setIsMobileCartOpen }) {
                         </span>
                       </Link>
                     </div>
-                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover:text-gold transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between px-6 py-4 text-[15px] font-medium text-gray-800 hover-text-[#a8741a] transition-colors cursor-pointer">
                       <Link
                         to="/contact"
-                        className={`pb-1 transition-colors hover:text-gold ${
+                        className={`pb-1 transition-colors hover-text-[#a8741a] ${
                           isActive("/contact")
-                            ? "text-gold border-b-2 border-gold"
+                            ? "primary-yellow border-b-2 border-[#a8741a]"
                             : ""
                         }`}
                       >

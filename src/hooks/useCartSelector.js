@@ -4,6 +4,12 @@ import { addToCart } from "../redux/slices/cartSlice";
 export default function useCartSelector(product) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items || []);
+  if (!product) {
+    return {
+      isInCart: false,
+      handleAddToCart: () => {},
+    };
+  }
   const isInCart = cart.some((item) => item.id === product.id);
   const handleAddToCart = () => {
     dispatch(addToCart(product));

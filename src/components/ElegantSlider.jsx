@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Eye, Heart, ChevronLeft, ChevronRight, Repeat } from "lucide-react";
+import { Eye, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import useProducts from "../hooks/useProducts";
 import { Link } from "react-router-dom";
 import useQuickView from "../hooks/useQuickView";
@@ -174,7 +174,7 @@ const ProductCard = ({ product, index, openQuickView }) => {
           {product.vendor}
         </p>
         <Link
-          href={`/collections/${product.Category?.slug}/product/${product.slug}`}
+          to={`/collections/${product.Category?.slug}/product/${product.slug}`}
         >
           <h3 className=" hover:text-[#a8741a] cursor-pointer mb-1 md:leading-snug! text-neutral-950 rajdhani-medium md:text-[22px]! text-[16px]! leading-5! tracking-normal normal-case transition-all duration-300">
             {product.name}

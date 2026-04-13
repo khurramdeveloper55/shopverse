@@ -10,7 +10,7 @@ export default function ProductGrid({
   sortBy,
   setSortBy,
   sortedProducts,
-  onOpenMobileFilter, // New prop
+  onOpenMobileFilter,
 }) {
   const { categoryName } = useParams();
   const { selectedProduct, openQuickView, closeQuickView } = useQuickView();

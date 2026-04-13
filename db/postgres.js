@@ -10,7 +10,16 @@ const sequelize = new Sequelize(
     host: process.env.DATABASE_HOST,
     dialect: process.env.DATABASE_DIALECT,
     logging: false,
-  }
+    dialectOptions: {
+      ssl:
+        process.env.NODE_ENV === "production"
+          ? {
+              require: true,
+              rejectUnauthorized: false,
+            }
+          : false,
+    },
+  },
 );
 
 let UserModel = null;

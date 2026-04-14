@@ -1,4 +1,4 @@
-import { DataTypes, ENUM } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../db/postgres.js";
 import bcrypt from "bcrypt";
 
@@ -39,7 +39,7 @@ export const User = sequelize.define(
           const salt = await bcrypt.genSalt(10);
           return (instance.password = await bcrypt.hash(
             instance.password,
-            salt
+            salt,
           ));
         }
       },
@@ -50,5 +50,5 @@ export const User = sequelize.define(
         delete instance.dataValues.password;
       },
     },
-  }
+  },
 );

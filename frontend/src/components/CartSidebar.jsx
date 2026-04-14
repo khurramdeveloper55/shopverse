@@ -6,7 +6,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
   removeFromCart,
-} from "../redux/slices/cartSlice"; // Adjust path
+} from "../redux/slices/cartSlice";
 
 export default function CartSidebar({ isOpen, onClose }) {
   const { items } = useSelector((state) => state.cart);

@@ -1,4 +1,4 @@
-import { Eye, Heart, Repeat, SlidersHorizontal } from "lucide-react";
+import { Eye, Heart, SlidersHorizontal } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import useQuickView from "../hooks/useQuickView";
 import QuickViewModal from "./QuickViewModal";

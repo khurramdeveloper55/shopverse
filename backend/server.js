@@ -1,7 +1,10 @@
 import { connection, sequelize } from "./db/postgres.js";
 import app from "./app.js";
 import dotenv from "dotenv";
-dotenv.config({ path: "./config.env" });
+import path from "path";
+dotenv.config({
+  path: path.join(process.cwd(), "config.env"),
+});
 
 const PORT = process.env.PORT || 3000;
 

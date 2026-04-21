@@ -5,16 +5,16 @@ export default function AboutPage() {
   return (
     <main className="grow">
       {/* Breadcrumbs */}
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
         <nav className="text-[14px] leading-5 font-medium">
           <ul className="flex items-center">
-            <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+            <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
               <Link to="/">Home</Link>
             </li>
 
-            <li className="inline-block px-[3px] text-gray-400">/</li>
+            <li className="inline-block px-0.75 text-gray-400">/</li>
 
-            <li className="inline-block px-[3px] text-gray-900 open-sans">
+            <li className="inline-block px-0.75 text-gray-900 open-sans">
               About
             </li>
           </ul>
@@ -22,7 +22,7 @@ export default function AboutPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="container-custom pb-12 max-w-[1200px] mx-auto md:px-0 px-4">
+      <section className="container-custom pb-12 max-w-300 mx-auto md:px-0 px-4">
         <div className="text-center mb-10">
           <span className="primary-yellow text-[14px] uppercase tracking-[0.3em] font-semibold">
             Timeless
@@ -73,7 +73,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section 1 */}
-      <section className="container-custom pb-12 pt-0 max-w-[1200px] mx-auto  md:px-0 px-4">
+      <section className="container-custom pb-12 pt-0 max-w-300 mx-auto  md:px-0 px-4">
         <div className="grid md:grid-cols-3 gap-12">
           {[
             {
@@ -100,7 +100,7 @@ export default function AboutPage() {
               <h2 className="text-5xl font-semibold tracking-tighter">
                 {stat.val}
               </h2>
-              <p className="text-lg text-gray-500 max-w-[200px] mx-auto leading-6">
+              <p className="text-lg text-gray-500 max-w-50 mx-auto leading-6">
                 {stat.desc}
               </p>
               <div className="flex justify-center pt-4"></div>
@@ -131,7 +131,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats/Feature Section 2 */}
-      <section className="container-custom py-12  max-w-[1200px] mx-auto md:px-0 px-4">
+      <section className="container-custom py-12  max-w-300 mx-auto md:px-0 px-4">
         <div className="grid md:grid-cols-3 gap-12 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl font-semibold leading-tight">
@@ -159,7 +159,7 @@ export default function AboutPage() {
 
       {/* Traffic Section */}
       <section className="container-custom pb-12 bg-orange-50">
-        <div className="grid md:grid-cols-2 gap-16 items-center py-12 max-w-[1200px] mx-auto md:px-0 px-4">
+        <div className="grid md:grid-cols-2 gap-16 items-center py-12 max-w-300 mx-auto md:px-0 px-4">
           <div className="md:w-[90%] overflow-hidden">
             <img
               src="/about-page-3.webp"
@@ -188,7 +188,7 @@ export default function AboutPage() {
       </section>
 
       {/* Finances Section */}
-      <section className="container-custom py-12 mx-auto max-w-[1200px] md:px-0 px-4">
+      <section className="container-custom py-12 mx-auto max-w-300 md:px-0 px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-12">
             <div>

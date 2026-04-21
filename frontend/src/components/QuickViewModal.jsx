@@ -68,7 +68,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
             </button>
 
             {/* Left: Product Images */}
-            <div className="w-full md:w-1/2 bg-[#FAF9F6] p-8 flex flex-col items-center justify-center min-h-[400px]">
+            <div className="w-full md:w-1/2 bg-[#FAF9F6] p-8 flex flex-col items-center justify-center min-h-100">
               <div className="relative w-full h-full flex items-center justify-center">
                 <img
                   src={product.images[0].main}
@@ -121,7 +121,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                 <button
                   onClick={handleAddToCart}
                   disabled={isInCart}
-                  className={`relative isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700 
+                  className={`relative isolate overflow-hidden inline-block px-8.75 py-3 border border-yellow-700 
     uppercase tracking-wide font-semibold rounded-md transition duration-300
 
     ${

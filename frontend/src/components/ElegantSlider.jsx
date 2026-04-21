@@ -9,7 +9,7 @@ import QuickViewModal from "./QuickViewModal";
 import { motion } from "motion/react";
 
 export default function ElegantSlider() {
-  const { products: rawProducts = [] } = useProducts();
+  const { products: rawProducts = [], isPending } = useProducts();
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3);
   const { selectedProduct, openQuickView, closeQuickView } = useQuickView();
@@ -90,6 +90,10 @@ export default function ElegantSlider() {
                 />
               );
             })}
+            {isPending &&
+              Array.from({ length: 6 }).map((_, index) => (
+                <ProductCardSkeleton key={`skeleton-${index}`} />
+              ))}
           </div>
         </div>
       </div>
@@ -101,6 +105,51 @@ export default function ElegantSlider() {
     </section>
   );
 }
+
+const ProductCardSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center animate-fade-in">
+      {/* Image Area Skeleton */}
+      <div className="relative w-full aspect-[1/1.2] bg-[#fffbf3] flex items-center justify-center p-8 mb-8 overflow-hidden rounded-xl">
+        {/* Main Image Placeholder */}
+        <div className="w-full h-full bg-gray-200 animate-pulse rounded-lg" />
+
+        {/* Hover Image Placeholder (faint) */}
+        <div className="absolute inset-0 w-full h-full bg-gray-300/40 animate-pulse rounded-lg" />
+
+        {/* Hover Tools Skeleton */}
+        <div className="absolute top-6 right-4 flex flex-col items-end gap-3 opacity-50">
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm animate-pulse" />
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm animate-pulse" />
+        </div>
+      </div>
+
+      {/* Text Content Skeleton */}
+      <div className="text-center w-full px-4 flex flex-col items-center pb-2">
+        {/* Vendor */}
+        <div className="h-3.5 w-20 bg-gray-200 rounded animate-pulse mb-2" />
+
+        {/* Product Name */}
+        <div className="h-6 w-[85%] bg-gray-200 rounded animate-pulse mb-3" />
+        <div className="h-6 w-[65%] bg-gray-200 rounded animate-pulse mb-4" />
+
+        {/* Rating Stars */}
+        <div className="flex justify-center gap-1 mb-4">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} className="text-gray-200 text-2xl">
+              ★
+            </span>
+          ))}
+        </div>
+
+        {/* Price / Button Area */}
+        <div className="relative w-full h-10 overflow-hidden flex items-center justify-center">
+          <div className="h-5 w-24 bg-gray-200 rounded animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ProductCard = ({ product, index, openQuickView }) => {
   const { isInCart, handleAddToCart } = useCartSelector(product);

@@ -132,7 +132,7 @@ export default function MobileFilterSidebar({
           <button
             key={option.id}
             onClick={() => setView(option.id)}
-            className="w-full flex items-center justify-between px-6 py-[18px] border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 transition-colors open-sans"
+            className="w-full flex items-center justify-between px-6 py-4.5 border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 transition-colors open-sans"
           >
             <span className="text-[16px] text-gray-800 font-normal">
               {option.label}
@@ -142,7 +142,7 @@ export default function MobileFilterSidebar({
         ))}
 
         {/* Temporary Sort */}
-        <div className="w-full flex items-center justify-between px-6 py-[18px] border-b border-gray-100">
+        <div className="w-full flex items-center justify-between px-6 py-4.5 border-b border-gray-100">
           <span className="text-[16px] text-neutral-800 font-normal open-sans">
             Sort by:
           </span>
@@ -206,7 +206,7 @@ export default function MobileFilterSidebar({
           {items.map((item) => (
             <label
               key={item.value}
-              className="flex items-center gap-4 px-6 py-[18px] hover:bg-gray-50 active:bg-gray-100 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0"
+              className="flex items-center gap-4 px-6 py-4.5 hover:bg-gray-50 active:bg-gray-100 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0"
             >
               <div className="relative flex items-center">
                 <input

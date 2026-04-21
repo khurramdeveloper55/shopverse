@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 export default function PrivacyPolicy() {
   return (
     <>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
         <nav className="text-[14px] leading-5 font-medium">
           <ul className="flex items-center">
-            <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+            <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
               <Link to="/">Home</Link>
             </li>
 
-            <li className="inline-block px-[3px] text-gray-400">/</li>
+            <li className="inline-block px-0.75 text-gray-400">/</li>
 
-            <li className="inline-block px-[3px] text-gray-900 open-sans">
+            <li className="inline-block px-0.75 text-gray-900 open-sans">
               Privacy Policy
             </li>
           </ul>

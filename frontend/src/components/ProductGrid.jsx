@@ -9,7 +9,7 @@ import QuickViewModal from "./QuickViewModal";
 import useQuickView from "../hooks/useQuickView";
 
 export default function ProductGrid() {
-  const { products = [] } = useProducts();
+  const { products = [], isPending } = useProducts();
   const limitedProducts = Array.isArray(products) ? products.slice(0, 8) : [];
 
   const [startIndex, setStartIndex] = useState(0);
@@ -95,23 +95,31 @@ export default function ProductGrid() {
         <div className="flex flex-col gap-y-8 max-w-7xl mx-auto px-4">
           {/* First Row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {firstRow.map((product, i) => (
-              <ProductCard
-                key={`r1-${product.id}-${startIndex}-${i}`}
-                product={product}
-                openQuickView={openQuickView}
-              />
-            ))}
+            {isPending
+              ? Array.from({ length: itemsPerRow }).map((_, i) => (
+                  <ProductCardSkeleton key={`skeleton-r1-${i}`} />
+                ))
+              : firstRow.map((product, i) => (
+                  <ProductCard
+                    key={`r1-${product.id}-${startIndex}-${i}`}
+                    product={product}
+                    openQuickView={openQuickView}
+                  />
+                ))}
           </div>
           {/* Second Row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {secondRow.map((product, i) => (
-              <ProductCard
-                key={`r2-${product.id}-${startIndex}-${i}`}
-                product={product}
-                openQuickView={openQuickView}
-              />
-            ))}
+            {isPending
+              ? Array.from({ length: totalVisible - itemsPerRow }).map(
+                  (_, i) => <ProductCardSkeleton key={`skeleton-r2-${i}`} />,
+                )
+              : secondRow.map((product, i) => (
+                  <ProductCard
+                    key={`r2-${product.id}-${startIndex}-${i}`}
+                    product={product}
+                    openQuickView={openQuickView}
+                  />
+                ))}
           </div>
         </div>
         {/* Dots Pagination */}
@@ -137,6 +145,45 @@ export default function ProductGrid() {
     </section>
   );
 }
+
+const ProductCardSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center animate-pulse">
+      {/* Image Area */}
+      <div className="relative w-full aspect-[1/1.2] bg-[#fffbf3] overflow-hidden mb-8 rounded-xl">
+        <div className="w-full h-full bg-gray-200" />
+
+        {/* Hover Icons Placeholder */}
+        <div className="absolute top-6 right-4 flex flex-col gap-3">
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm" />
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm" />
+        </div>
+      </div>
+
+      {/* Product Info */}
+      <div className="text-center w-full px-4 pb-2">
+        {/* Vendor */}
+        <div className="h-3.5 w-16 bg-gray-200 rounded mx-auto mb-2" />
+
+        {/* Product Name */}
+        <div className="h-6 w-[85%] bg-gray-200 rounded mx-auto mb-2" />
+        <div className="h-6 w-[60%] bg-gray-200 rounded mx-auto mb-4" />
+
+        {/* Rating Stars */}
+        <div className="flex justify-center gap-1 mb-4">
+          {[1, 2, 3, 4, 5].map((_, i) => (
+            <span key={i} className="text-gray-200 text-2xl">
+              ★
+            </span>
+          ))}
+        </div>
+
+        {/* Price / Button Area */}
+        <div className="h-5 w-28 bg-gray-200 rounded mx-auto" />
+      </div>
+    </div>
+  );
+};
 
 const ProductCard = ({ product, openQuickView }) => {
   const { isInCart, handleAddToCart } = useCartSelector(product);

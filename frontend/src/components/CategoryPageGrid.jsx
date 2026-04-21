@@ -11,12 +11,15 @@ export default function ProductGrid({
   setSortBy,
   sortedProducts,
   onOpenMobileFilter,
+  isPending,
 }) {
   const { categoryName } = useParams();
   const { selectedProduct, openQuickView, closeQuickView } = useQuickView();
 
+  const skeletonCount = sortedProducts.length > 0 ? sortedProducts.length : 6;
+
   return (
-    <section className="pb-20 pt-0 bg-white relative group/slider">
+    <section className="pb-20 pt-0 bg-white relative group/slider w-full">
       <div className="flex md:justify-end justify-between items-center mb-8 mt-4 ">
         <div className="flex items-center justify-between ">
           <div
@@ -65,7 +68,9 @@ export default function ProductGrid({
         {/* Product count */}
         <div className="md:ml-20 ml-auto relative">
           <h2 className="text-base font-semibold opacity-60 open-sans">
-            {sortedProducts.length} products
+            {isPending
+              ? "Loading products..."
+              : `${sortedProducts.length} products`}
           </h2>
         </div>
       </div>
@@ -74,14 +79,18 @@ export default function ProductGrid({
         <div className="flex flex-col gap-y-12 max-w-7xl mx-auto px-4">
           {/* First Row */}
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sortedProducts.map((product, i) => (
-              <ProductCard
-                key={`r1-${product.id}`}
-                product={product}
-                categoryName={categoryName}
-                openQuickView={openQuickView}
-              />
-            ))}
+            {isPending
+              ? Array.from({ length: skeletonCount }).map((_, i) => (
+                  <ProductCardSkeleton key={`skeleton-${i}`} />
+                ))
+              : sortedProducts.map((product, i) => (
+                  <ProductCard
+                    key={`r1-${product.id}`}
+                    product={product}
+                    categoryName={categoryName}
+                    openQuickView={openQuickView}
+                  />
+                ))}
           </div>
         </div>
       </div>
@@ -221,6 +230,51 @@ const ProductCard = ({ product, categoryName, openQuickView }) => {
               </button>
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ProductCardSkeleton = () => {
+  return (
+    <div className="group flex flex-col items-center animate-pulse">
+      {/* Image Area - Exact same as real card */}
+      <div className="relative w-full aspect-[1/1.2] cursor-pointer bg-[#fffbf3] overflow-hidden mb-8 flex items-center justify-center rounded-xl">
+        {/* Main Image Placeholder */}
+        <div className="w-full h-full bg-gray-200" />
+
+        {/* Fake Badge */}
+        <div className="absolute top-4 left-4 h-5 w-16 bg-white/80 rounded" />
+
+        {/* Fake Hover Icons */}
+        <div className="absolute top-6 left-0 right-4 flex flex-col items-end gap-3 opacity-50">
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm" />
+          <div className="w-10 h-10 bg-white rounded-full shadow-sm" />
+        </div>
+      </div>
+
+      {/* Product Info - Exact same structure and spacing */}
+      <div className="text-center w-full px-4 flex flex-col items-center pb-2">
+        {/* Vendor */}
+        <div className="h-3.5 w-20 bg-gray-200 rounded mx-auto mb-1" />
+
+        {/* Product Name - Two lines to match real height */}
+        <div className="h-6 w-[88%] bg-gray-200 rounded mx-auto mb-1" />
+        <div className="h-6 w-[68%] bg-gray-200 rounded mx-auto mb-4" />
+
+        {/* Rating Stars */}
+        <div className="flex justify-center mb-4 gap-0.5">
+          {[1, 2, 3, 4, 5].map((_, i) => (
+            <span key={i} className="text-gray-200 text-2xl">
+              ★
+            </span>
+          ))}
+        </div>
+
+        {/* Price Area - Same height container */}
+        <div className="relative w-full h-10 flex items-center justify-center">
+          <div className="h-5 w-28 bg-gray-200 rounded" />
         </div>
       </div>
     </div>

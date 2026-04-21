@@ -61,16 +61,16 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
         <nav className="text-[14px] leading-5 font-medium">
           <ul className="flex items-center">
-            <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+            <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
               <Link to="/">Home</Link>
             </li>
 
-            <li className="inline-block px-[3px] text-gray-400">/</li>
+            <li className="inline-block px-0.75 text-gray-400">/</li>
 
-            <li className="inline-block px-[3px] text-gray-900 open-sans">
+            <li className="inline-block px-0.75 text-gray-900 open-sans">
               Contact
             </li>
           </ul>
@@ -189,7 +189,7 @@ export default function ContactPage() {
             <div className="pt-4">
               <button
                 type="submit"
-                className="relative isolate w-30 overflow-hidden flex mx-auto items-center px-[35px] py-3 border border-yellow-700 
+                className="relative isolate w-30 overflow-hidden flex mx-auto items-center px-8.75 py-3 border border-yellow-700 
     text-left text-yellow-700 uppercase tracking-wide font-semibold
     bg-transparent rounded-md transition duration-300
     hover:text-white
@@ -215,7 +215,7 @@ export default function ContactPage() {
       {/* Store Location */}
       <section className=" bg-gray-200/50">
         <div>
-          <div className="relative w-full h-[600px] overflow-hidden shadow-sm">
+          <div className="relative w-full h-150 overflow-hidden shadow-sm">
             {/* Map */}
             <iframe
               src="https://www.google.com/maps?q=Copley,South+Australia+5732&output=embed"

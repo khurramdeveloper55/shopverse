@@ -10,7 +10,7 @@ export default function BannerAds() {
   return (
     <section className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* Left Banner */}
-      <div className="relative h-[400px] overflow-hidden group">
+      <div className="relative h-100 overflow-hidden group">
         <motion.img
           initial={{ scale: 1.1 }}
           whileInView={{ scale: 1 }}
@@ -40,7 +40,7 @@ export default function BannerAds() {
       </div>
 
       {/* Right Banner */}
-      <div className="relative h-[400px] overflow-hidden group">
+      <div className="relative h-100 overflow-hidden group">
         <motion.img
           initial={{ scale: 1.2 }}
           whileInView={{ scale: 1 }}

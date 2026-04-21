@@ -34,16 +34,16 @@ export default function CartPage() {
   if (items?.length === 0) {
     return (
       <>
-        <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+        <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
           <nav className="text-[14px] leading-5 font-medium">
             <ul className="flex items-center">
-              <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+              <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
                 <Link to="/">Home</Link>
               </li>
 
-              <li className="inline-block px-[3px] text-gray-400">/</li>
+              <li className="inline-block px-0.75 text-gray-400">/</li>
 
-              <li className="inline-block px-[3px] text-gray-900 open-sans">
+              <li className="inline-block px-0.75 text-gray-900 open-sans">
                 Cart
               </li>
             </ul>
@@ -65,16 +65,16 @@ export default function CartPage() {
   }
   return (
     <>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
         <nav className="text-[14px] leading-5 font-medium">
           <ul className="flex items-center">
-            <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+            <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
               <Link to="/">Home</Link>
             </li>
 
-            <li className="inline-block px-[3px] text-gray-400">/</li>
+            <li className="inline-block px-0.75 text-gray-400">/</li>
 
-            <li className="inline-block px-[3px] text-gray-900 open-sans">
+            <li className="inline-block px-0.75 text-gray-900 open-sans">
               Cart
             </li>
           </ul>
@@ -243,7 +243,7 @@ export default function CartPage() {
                 <label className="text-[16px] font-medium open-sans text-neutral-500">
                   Special instructions for seller
                 </label>
-                <textarea className="w-full border border-zinc-200 rounded-xl p-5 text-sm min-h-[120px] focus:outline-none focus:border-[#a8741a] bg-white shadow-inner resize-none" />
+                <textarea className="w-full border border-zinc-200 rounded-xl p-5 text-sm min-h-30 focus:outline-none focus:border-[#a8741a] bg-white shadow-inner resize-none" />
               </div>
 
               {/* Coupon Section */}

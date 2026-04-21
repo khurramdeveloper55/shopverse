@@ -1,7 +1,7 @@
 export default function Button({ children, className = "", ...props }) {
   return (
     <button
-      className={`relative isolate overflow-hidden inline-block px-[35px] py-3 border border-[#a8741a] 
+      className={`relative isolate overflow-hidden inline-block px-8.75 py-3 border border-[#a8741a] 
     text-left text-[#a8741a] uppercase tracking-wide font-semibold
     bg-transparent rounded-md transition duration-300
     hover:text-white

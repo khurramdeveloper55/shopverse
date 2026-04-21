@@ -14,16 +14,16 @@ export default function WishlistItem() {
   if (items.length === 0) {
     return (
       <>
-        <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+        <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
           <nav className="text-[14px] leading-5 font-medium">
             <ul className="flex items-center">
-              <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+              <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
                 <Link to="/">Home</Link>
               </li>
 
-              <li className="inline-block px-[3px] text-gray-400">/</li>
+              <li className="inline-block px-0.75 text-gray-400">/</li>
 
-              <li className="inline-block px-[3px] text-gray-900 open-sans">
+              <li className="inline-block px-0.75 text-gray-900 open-sans">
                 Wishlist
               </li>
             </ul>
@@ -48,16 +48,16 @@ export default function WishlistItem() {
 
   return (
     <>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-6">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-6">
         <nav className="text-[14px] leading-5 font-medium">
           <ul className="flex items-center">
-            <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+            <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
               <Link to="/">Home</Link>
             </li>
 
-            <li className="inline-block px-[3px] text-gray-400">/</li>
+            <li className="inline-block px-0.75 text-gray-400">/</li>
 
-            <li className="inline-block px-[3px] text-gray-900 open-sans">
+            <li className="inline-block px-0.75 text-gray-900 open-sans">
               Wishlist
             </li>
           </ul>
@@ -69,7 +69,7 @@ export default function WishlistItem() {
           Wishlist
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20 max-w-[1200px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20 max-w-300 mx-auto">
         {items.map((item) => {
           const imageUrl = item?.images?.[0]?.main || item?.image || "";
           return (

@@ -18,7 +18,7 @@ import { decreaseQuantity, increaseQuantity } from "../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useCartSelector from "../hooks/useCartSelector";
 
-export default function ProductSection({ product }) {
+export default function ProductSection({ product, isPending }) {
   const { categoryName } = useParams();
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState(product?.sizes || "S");
@@ -54,6 +54,10 @@ export default function ProductSection({ product }) {
     }
   };
 
+  if (isPending) {
+    return <ProductSectionSkeleton />;
+  }
+
   if (!product) {
     return null;
   }
@@ -63,13 +67,13 @@ export default function ProductSection({ product }) {
       {/* Breadcrumbs */}
       <nav className="text-[14px] leading-5 font-medium py-6">
         <ul className="flex items-center">
-          <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+          <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
             <Link to="/">Home</Link>
           </li>
 
-          <li className="inline-block px-[3px] text-gray-400">/</li>
+          <li className="inline-block px-0.75 text-gray-400">/</li>
 
-          <li className="inline-block px-[3px] text-gray-900 hover:underline cursor-pointer open-sans">
+          <li className="inline-block px-0.75 text-gray-900 hover:underline cursor-pointer open-sans">
             <Link to={`/collections/${categoryName}`}>
               {categoryName
                 .replace(/-/g, " ")
@@ -81,14 +85,14 @@ export default function ProductSection({ product }) {
                 .join(" ")}
             </Link>
           </li>
-          <li className="inline-block px-[3px] text-gray-400">/</li>
-          <li className="inline-block px-[3px] text-gray-900 open-sans">
+          <li className="inline-block px-0.75 text-gray-400">/</li>
+          <li className="inline-block px-0.75 text-gray-900 open-sans">
             {product.name}
           </li>
         </ul>
       </nav>
 
-      <div className="flex flex-col lg:flex-row gap-0 max-w-[1200px]">
+      <div className="flex flex-col lg:flex-row gap-0 max-w-300">
         {/* Left: Gallery */}
         <div className="lg:w-7/12 md:mb-0 mb-12">
           <div className="relative  rounded overflow-hidden aspect-square mb-4">
@@ -182,7 +186,7 @@ export default function ProductSection({ product }) {
             <button
               onClick={handleAddToCart}
               disabled={isInCart}
-              className={`relative isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700 
+              className={`relative isolate overflow-hidden inline-block px-8.75 py-3 border border-yellow-700 
     uppercase tracking-wide font-semibold rounded-md transition duration-300
 
     ${
@@ -373,3 +377,142 @@ export default function ProductSection({ product }) {
     </section>
   );
 }
+
+const ProductSectionSkeleton = () => {
+  return (
+    <section className="container mx-auto px-4">
+      {/* Breadcrumbs Skeleton */}
+      <nav className="py-6">
+        <div className="flex items-center gap-2 text-sm">
+          <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 w-4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 w-4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 w-48 bg-gray-200 rounded animate-pulse" />
+        </div>
+      </nav>
+
+      <div className="flex flex-col lg:flex-row gap-8 max-w-300">
+        {/* Left: Gallery Skeleton */}
+        <div className="lg:w-7/12 md:mb-0 mb-12">
+          {/* Main Image */}
+          <div className="relative rounded overflow-hidden aspect-square mb-4 bg-gray-100 animate-pulse">
+            <div className="w-full h-full bg-linear-to-br from-gray-200 to-gray-300" />
+
+            {/* Navigation Arrows */}
+            <div className="absolute left-10 md:left-24 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full" />
+            <div className="absolute right-10 md:right-24 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full" />
+          </div>
+
+          {/* Thumbnails */}
+          <div className="flex gap-4">
+            {[1, 2, 3, 4].map((_, idx) => (
+              <div
+                key={idx}
+                className="w-18 h-22 rounded overflow-hidden border-2 border-transparent bg-gray-200 animate-pulse"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Details Skeleton */}
+        <div className="lg:w-5/12 space-y-8">
+          {/* Product Name */}
+          <div className="space-y-3">
+            <div className="h-10 bg-gray-200 rounded w-11/12 animate-pulse" />
+            <div className="h-8 bg-gray-200 rounded w-3/4 animate-pulse" />
+          </div>
+
+          {/* Rating */}
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div
+                key={i}
+                className="w-6 h-6 bg-gray-200 rounded animate-pulse"
+              />
+            ))}
+          </div>
+
+          {/* Price & Stock */}
+          <div className="flex items-center gap-6 pb-6 border-b border-gray-100">
+            <div className="h-9 w-32 bg-gray-200 rounded animate-pulse" />
+            <div className="h-6 w-28 bg-gray-200 rounded animate-pulse" />
+          </div>
+
+          {/* Quantity & Add to Cart */}
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Quantity */}
+            <div className="flex items-center border border-gray-200 rounded-sm">
+              <div className="w-12 h-12 bg-gray-100 animate-pulse" />
+              <div className="w-12 h-12 bg-gray-100 animate-pulse" />
+              <div className="w-12 h-12 bg-gray-100 animate-pulse" />
+            </div>
+
+            {/* Add to Cart Button */}
+            <div className="h-12 w-56 bg-gray-200 rounded-md animate-pulse" />
+          </div>
+
+          {/* Size Selector */}
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <div className="h-5 w-20 bg-gray-200 rounded animate-pulse" />
+              <div className="h-5 w-24 bg-gray-200 rounded animate-pulse" />
+            </div>
+            <div className="flex gap-2">
+              {["S", "M", "L"].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-12 h-10 bg-gray-200 rounded animate-pulse"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Product Info */}
+          <div className="space-y-4 pt-6 border-t border-gray-100">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="flex gap-8">
+                <div className="w-24 h-5 bg-gray-200 rounded animate-pulse" />
+                <div className="h-5 bg-gray-200 rounded w-40 animate-pulse" />
+              </div>
+            ))}
+          </div>
+
+          {/* Accordion Items */}
+          <div className="space-y-6 pt-4">
+            {[1, 2].map((_, i) => (
+              <div key={i} className="border-t border-gray-100 pt-4">
+                <div className="flex justify-between items-center py-4">
+                  <div className="h-5 w-48 bg-gray-200 rounded animate-pulse" />
+                  <div className="w-6 h-6 bg-gray-200 rounded animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust Badges */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
+            {[1, 2, 3].map((_, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded w-28 animate-pulse" />
+              </div>
+            ))}
+          </div>
+
+          {/* Social & Urgency Box */}
+          <div className="mt-10 p-6 border border-gray-100 rounded bg-gray-50 animate-pulse">
+            <div className="space-y-6">
+              <div className="h-6 w-3/4 bg-gray-200 rounded" />
+              <div className="h-6 w-56 bg-orange-100 rounded" />
+              <div className="space-y-2">
+                <div className="h-3 w-full bg-gray-200 rounded" />
+                <div className="h-2 w-1/3 bg-[#BFA07A] rounded" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

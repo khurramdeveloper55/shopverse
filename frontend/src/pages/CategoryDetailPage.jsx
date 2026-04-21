@@ -10,7 +10,7 @@ import MobileFilterSidebar from "../components/MobileFilterSidebar";
 
 export default function CategoryDetailPage() {
   const { categoryName } = useParams();
-  const { category } = useCategoryDetail(categoryName);
+  const { category, isPending } = useCategoryDetail(categoryName);
   const products = category?.Products || [];
 
   // Main filters (used by Desktop + final result)
@@ -66,10 +66,10 @@ export default function CategoryDetailPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <main className="grow">
-        <CategoryPageHero category={category} />
+        <CategoryPageHero category={category} isPending={isPending} />
         <CategorySlider />
 
-        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row px-4">
+        <div className="max-w-300 mx-auto flex flex-col md:flex-row px-4">
           {/* Desktop Sidebar - Instant filtering */}
           <div className="hidden md:block w-72 shrink-0 pt-6">
             <SidebarFilter
@@ -79,6 +79,7 @@ export default function CategoryDetailPage() {
               setBrandFilter={setBrandFilter}
               typeFilter={typeFilter}
               setTypeFilter={setTypeFilter}
+              isPending={isPending}
             />
           </div>
 
@@ -88,6 +89,7 @@ export default function CategoryDetailPage() {
             setSortBy={setSortBy}
             sortedProducts={sortedProducts}
             onOpenMobileFilter={() => setIsMobileFilterOpen(true)}
+            isPending={isPending}
           />
 
           {/* Mobile Filter Sidebar */}

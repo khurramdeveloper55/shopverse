@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Categories() {
-  const { categories = [] } = useCategories();
+  const { categories = [], isPending } = useCategories();
 
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(6);
@@ -59,92 +59,97 @@ export default function Categories() {
         <div className="relative flex items-center px-4 md:px-10">
           {/* Categories Row */}
           <div className="flex-1 flex gap-x-6 overflow-hidden">
-            {visibleCategories.map((cat, i) => (
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeOut",
-                }}
-                key={`${cat.name}-${startIndex}-${i}`}
-                className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] "
-              >
-                <Link to={`/collections/${cat.slug}`}>
-                  <div className="group cursor-pointer flex flex-col items-center">
-                    <div className="relative w-full aspect-square flex items-center justify-center">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <svg
-                          viewBox="0 0 100 100"
-                          className="w-full h-full transform -rotate-90 text-gray-200"
-                        >
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="46"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeDasharray="0.4 4.417"
-                          />
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="42"
-                            fill="none"
-                            stroke="#f5f5f5"
-                            strokeWidth="0.5"
-                          />
-                        </svg>
-                      </div>
-
-                      <div className="relative w-full overflow-hidden group">
-                        <span
-                          href={`/collections/${cat.slug}`}
-                          className="relative block w-full aspect-square"
-                        >
-                          <div className="absolute inset-0 m-2.5 rounded-full opacity-25 z-10 pointer-events-none transition duration-300">
-                            <img
-                              src="/categories/icon-watch-dial.webp"
-                              alt=""
-                              className="w-full h-full object-cover rounded-full  group-hover:scale-95 transition-transform duration-500"
-                            />
+            {isPending
+              ? // Show Skeletons while loading
+                Array.from({ length: itemsToShow }).map((_, i) => (
+                  <CategoryCardSkeleton key={`skeleton-${i}`} />
+                ))
+              : visibleCategories.map((cat, i) => (
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeOut",
+                    }}
+                    key={`${cat.name}-${startIndex}-${i}`}
+                    className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] "
+                  >
+                    <Link to={`/collections/${cat.slug}`}>
+                      <div className="group cursor-pointer flex flex-col items-center">
+                        <div className="relative w-full aspect-square flex items-center justify-center">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <svg
+                              viewBox="0 0 100 100"
+                              className="w-full h-full transform -rotate-90 text-gray-200"
+                            >
+                              <circle
+                                cx="50"
+                                cy="50"
+                                r="46"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeDasharray="0.4 4.417"
+                              />
+                              <circle
+                                cx="50"
+                                cy="50"
+                                r="42"
+                                fill="none"
+                                stroke="#f5f5f5"
+                                strokeWidth="0.5"
+                              />
+                            </svg>
                           </div>
 
-                          {/* Main Image */}
-                          <img
-                            src={cat.image}
-                            alt={cat.name}
-                            loading="lazy"
-                            className="absolute inset-0  object-cover 
+                          <div className="relative w-full overflow-hidden group">
+                            <span
+                              href={`/collections/${cat.slug}`}
+                              className="relative block w-full aspect-square"
+                            >
+                              <div className="absolute inset-0 m-2.5 rounded-full opacity-25 z-10 pointer-events-none transition duration-300">
+                                <img
+                                  src="/categories/icon-watch-dial.webp"
+                                  alt=""
+                                  className="w-full h-full object-cover rounded-full  group-hover:scale-95 transition-transform duration-500"
+                                />
+                              </div>
+
+                              {/* Main Image */}
+                              <img
+                                src={cat.image}
+                                alt={cat.name}
+                                loading="lazy"
+                                className="absolute inset-0  object-cover 
              transition-transform duration-500 group-hover:scale-105 
              w-[calc(100%-20px)] h-[calc(100%-20px)] 
              mx-auto bottom-0 right-0 top-2.5
              rounded-full shadow-[0_0_10px_#00000026]"
-                          />
-                        </span>
-                      </div>
-                    </div>
+                              />
+                            </span>
+                          </div>
+                        </div>
 
-                    {/* Category Info */}
-                    <div className="text-center mt-6">
-                      <h4 className="text-2xl capitalize group-hover:text-stone-500 pt-3 font-semibold text-neutral-950">
-                        {cat.name}
-                      </h4>
-                      <p className="text-neutral-500/60 text-lg font-medium">
-                        {cat.Products.length} products
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                        {/* Category Info */}
+                        <div className="text-center mt-6">
+                          <h4 className="text-2xl capitalize group-hover:text-stone-500 pt-3 font-semibold text-neutral-950">
+                            {cat.name}
+                          </h4>
+                          <p className="text-neutral-500/60 text-lg font-medium">
+                            {cat.Products.length} products
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
           </div>
         </div>
 
         {/* Dots Pagination */}
-        {shouldShowNavigation && (
+        {shouldShowNavigation && !isPending && (
           <div className="flex justify-center gap-2 mt-8">
             {Array.from({ length: totalPages }).map((_, i) => (
               <div
@@ -173,3 +178,31 @@ export default function Categories() {
     </section>
   );
 }
+
+const CategoryCardSkeleton = () => {
+  return (
+    <div className="flex-1 min-w-[calc(50%-12px)] md:min-w-[calc(25%-18px)] lg:min-w-[calc(16.666%-20px)] animate-pulse">
+      <div className="group cursor-pointer flex flex-col items-center">
+        {/* Image Container Skeleton */}
+        <div className="relative w-full aspect-square flex items-center justify-center bg-gray-100 rounded-full overflow-hidden">
+          {/* Decorative SVG Circle Lines */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-[92%] h-[92%] border border-gray-300 rounded-full" />
+          </div>
+
+          {/* Main Image Placeholder */}
+          <div className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-gray-200 rounded-full mx-auto" />
+        </div>
+
+        {/* Category Info Skeleton */}
+        <div className="text-center mt-6 w-full">
+          {/* Category Name */}
+          <div className="h-8 w-40 bg-gray-200 rounded mx-auto mb-3" />
+
+          {/* Product Count */}
+          <div className="h-5 w-28 bg-gray-200 rounded mx-auto" />
+        </div>
+      </div>
+    </div>
+  );
+};

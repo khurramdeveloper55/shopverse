@@ -100,7 +100,7 @@ export default function Footer() {
                 />
                 <Link
                   className="
-    relative z-10 isolate overflow-hidden inline-block px-[35px] py-3 border border-yellow-700
+    relative z-10 isolate overflow-hidden inline-block px-8.75 py-3 border border-yellow-700
     text-left text-yellow-700 uppercase tracking-wide font-semibold
     bg-transparent rounded-md transition duration-300
     hover:text-white

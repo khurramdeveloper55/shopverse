@@ -5,7 +5,12 @@ import Layout from "./components/Layout";
 import { Route } from "react-router-dom";
 import CategoryDetailPage from "./pages/CategoryDetailPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useIsFetching,
+  useIsMutating,
+} from "@tanstack/react-query";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import AboutPage from "./pages/AboutPage";
@@ -30,26 +35,19 @@ const queryClient = new QueryClient({
 
 function ReactQueryLoaderHandler() {
   const dispatch = useDispatch();
+  const isFetching = useIsFetching();
+  const hasInitialLoadCompleted = useRef(false);
 
   useEffect(() => {
-    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
-      const isAnyQueryLoading = Array.from(
-        queryClient.getQueryCache().findAll(),
-      ).some(
-        (query) =>
-          query.state.status === "loading" ||
-          query.state.fetchStatus === "fetching",
-      );
-
-      if (isAnyQueryLoading) {
-        dispatch(startLoading());
-      } else {
-        dispatch(stopLoading());
+    if (isFetching > 0 && !hasInitialLoadCompleted.current) {
+      dispatch(startLoading("Loading..."));
+    } else if (isFetching === 0) {
+      dispatch(stopLoading());
+      if (!hasInitialLoadCompleted.current) {
+        hasInitialLoadCompleted.current = true;
       }
-    });
-
-    return () => unsubscribe();
-  }, [dispatch]);
+    }
+  }, [isFetching, dispatch]);
 
   return null;
 }
@@ -57,8 +55,8 @@ function ReactQueryLoaderHandler() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <GlobalLoader />
-      <ReactQueryLoaderHandler />
+      {/* <GlobalLoader /> */}
+      {/* <ReactQueryLoaderHandler /> */}
       <BrowserRouter>
         <ScrollToTop />
         <Routes>

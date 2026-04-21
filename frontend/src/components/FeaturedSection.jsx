@@ -7,7 +7,7 @@ export default function FeaturedSection() {
   const catLink = categories?.map((cat) => cat.slug)[3];
 
   return (
-    <section className="relative w-full min-h-[500px] md:h-[550px] flex items-center bg-[#f4f4f4] overflow-hidden">
+    <section className="relative w-full min-h-125 md:h-137.5 flex items-center bg-[#f4f4f4] overflow-hidden">
       {/* Background Image - Top down watch on light texture */}
       <div className="absolute inset-0 z-0">
         <img

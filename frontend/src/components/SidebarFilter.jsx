@@ -10,19 +10,12 @@ export default function SidebarFilter({
   setBrandFilter,
   typeFilter,
   setTypeFilter,
+  isPending,
 }) {
   const { categoryName } = useParams();
   const { category = [] } = useCategoryDetail(categoryName);
   const products = category?.Products || [];
 
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(50);
-  const minLimit = 0;
-  const maxLimit = 50;
-
-  // Convert values to percentages for the range track
-  const minPercent = ((minPrice - minLimit) / (maxLimit - minLimit)) * 100;
-  const maxPercent = ((maxPrice - minLimit) / (maxLimit - minLimit)) * 100;
   const [openSections, setOpenSections] = useState({
     Availability: true,
     Price: true,
@@ -60,126 +53,181 @@ export default function SidebarFilter({
         Filter:
       </h2>
 
-      <div className="mb-6 pb-6 border-b border-t border-gray-100">
-        <div
-          className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
-          onClick={() => toggleSection("Availability")}
-        >
-          <h5 className="text-[16px]! mt-4  font-semibold no-underline text-neutral-950 mb-0">
-            Availability
-          </h5>
-          <ChevronDown
-            size={16}
-            className={`transition-transform duration-300 mt-2 ${
-              openSections["Availability"] ? "rotate-180" : ""
-            }`}
-          />
-        </div>
-        {openSections["Availability"] && (
-          <div className="space-y-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            {availableOpt.map((opt) => (
-              <label
-                key={opt.label}
-                className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-black transition-colors"
-              >
-                <input
-                  type="checkbox"
-                  checked={availability.includes(opt.value)}
-                  onChange={() => {
-                    setAvailability((prev) =>
-                      prev.includes(opt.value)
-                        ? prev.filter((item) => item != opt.value)
-                        : [...prev, opt.value],
-                    );
-                  }}
-                  className="w-4 h-4 rounded border-gray-300 accent-black"
-                />
-                <span>
-                  {opt.label} ({opt.count})
-                </span>
-              </label>
-            ))}
+      {isPending ? (
+        // ==================== SKELETON ====================
+        <SidebarFilterSkeleton />
+      ) : (
+        <>
+          <div className="mb-6 pb-6 border-b border-t border-gray-100">
+            <div
+              className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
+              onClick={() => toggleSection("Availability")}
+            >
+              <h5 className="text-[16px]! mt-4  font-semibold no-underline text-neutral-950 mb-0">
+                Availability
+              </h5>
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 mt-2 ${
+                  openSections["Availability"] ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {openSections["Availability"] && (
+              <div className="space-y-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                {availableOpt.map((opt) => (
+                  <label
+                    key={opt.label}
+                    className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-black transition-colors"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={availability.includes(opt.value)}
+                      onChange={() => {
+                        setAvailability((prev) =>
+                          prev.includes(opt.value)
+                            ? prev.filter((item) => item != opt.value)
+                            : [...prev, opt.value],
+                        );
+                      }}
+                      className="w-4 h-4 rounded border-gray-300 accent-black"
+                    />
+                    <span>
+                      {opt.label} ({opt.count})
+                    </span>
+                  </label>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className="mb-6 pb-6 border-b border-gray-100">
-        <div
-          className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
-          onClick={() => toggleSection("Brand")}
-        >
-          <h5 className="text-[16px] font-semibold tracking-wider">Brands</h5>
-          <ChevronDown
-            size={16}
-            className={`transition-transform duration-300 ${
-              openSections.Brand ? "rotate-180" : ""
-            }`}
-          />
-        </div>
+          <div className="mb-6 pb-6 border-b border-gray-100">
+            <div
+              className="flex items-center justify-between mb-4 cursor-pointer hover:text-black group"
+              onClick={() => toggleSection("Brand")}
+            >
+              <h5 className="text-[16px] font-semibold tracking-wider">
+                Brands
+              </h5>
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 ${
+                  openSections.Brand ? "rotate-180" : ""
+                }`}
+              />
+            </div>
 
-        {openSections.Brand && (
-          <div className="space-y-2">
-            {uniqueVendor.map((opt) => (
-              <label
-                key={opt}
-                className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-black"
-              >
-                <input
-                  type="checkbox"
-                  checked={brandFilter.includes(opt)}
-                  onChange={() =>
-                    setBrandFilter((prev) =>
-                      prev.includes(opt)
-                        ? prev.filter((item) => item != opt)
-                        : [...prev, opt],
-                    )
-                  }
-                />
-                <span>{opt}</span>
-              </label>
-            ))}
+            {openSections.Brand && (
+              <div className="space-y-2">
+                {uniqueVendor.map((opt) => (
+                  <label
+                    key={opt}
+                    className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-black"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={brandFilter.includes(opt)}
+                      onChange={() =>
+                        setBrandFilter((prev) =>
+                          prev.includes(opt)
+                            ? prev.filter((item) => item != opt)
+                            : [...prev, opt],
+                        )
+                      }
+                    />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className="mb-6 pb-6 border-b border-gray-100">
-        <div
-          className="flex items-center justify-between mb-4 cursor-pointer"
-          onClick={() => toggleSection("Type")}
-        >
-          <h5 className="text-[16px] font-semibold tracking-wider">Types</h5>
-          <ChevronDown
-            size={16}
-            className={`transition-transform duration-300 ${
-              openSections.Type ? "rotate-180" : ""
-            }`}
-          />
-        </div>
+          <div className="mb-6 pb-6 border-b border-gray-100">
+            <div
+              className="flex items-center justify-between mb-4 cursor-pointer"
+              onClick={() => toggleSection("Type")}
+            >
+              <h5 className="text-[16px] font-semibold tracking-wider">
+                Types
+              </h5>
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 ${
+                  openSections.Type ? "rotate-180" : ""
+                }`}
+              />
+            </div>
 
-        {openSections.Type && (
-          <div className="space-y-2">
-            {uniqueTypes.map((opt) => (
-              <label
-                key={opt}
-                className="flex items-center gap-2 text-gray-600  cursor-pointer hover:text-black"
-              >
-                <input
-                  type="checkbox"
-                  checked={typeFilter.includes(opt)}
-                  onChange={() =>
-                    setTypeFilter((prev) =>
-                      prev.includes(opt)
-                        ? prev.filter((item) => item != opt)
-                        : [...prev, opt],
-                    )
-                  }
-                />
-                <span>{opt}</span>
-              </label>
-            ))}
+            {openSections.Type && (
+              <div className="space-y-2">
+                {uniqueTypes.map((opt) => (
+                  <label
+                    key={opt}
+                    className="flex items-center gap-2 text-gray-600  cursor-pointer hover:text-black"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={typeFilter.includes(opt)}
+                      onChange={() =>
+                        setTypeFilter((prev) =>
+                          prev.includes(opt)
+                            ? prev.filter((item) => item != opt)
+                            : [...prev, opt],
+                        )
+                      }
+                    />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </aside>
   );
 }
+
+const SidebarFilterSkeleton = () => {
+  return (
+    <div className="animate-pulse space-y-10">
+      {/* Availability Skeleton */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div className="h-5 w-28 bg-gray-200 rounded" />
+          <div className="h-4 w-4 bg-gray-200 rounded" />
+        </div>
+        <div className="space-y-3 pl-1">
+          <div className="h-4 w-36 bg-gray-200 rounded" />
+          <div className="h-4 w-40 bg-gray-200 rounded" />
+        </div>
+      </div>
+
+      {/* Brands Skeleton */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div className="h-5 w-20 bg-gray-200 rounded" />
+          <div className="h-4 w-4 bg-gray-200 rounded" />
+        </div>
+        <div className="space-y-3 pl-1">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-4 w-32 bg-gray-200 rounded" />
+          ))}
+        </div>
+      </div>
+
+      {/* Types Skeleton */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div className="h-5 w-20 bg-gray-200 rounded" />
+          <div className="h-4 w-4 bg-gray-200 rounded" />
+        </div>
+        <div className="space-y-3 pl-1">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-4 w-28 bg-gray-200 rounded" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};

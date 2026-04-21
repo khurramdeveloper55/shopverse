@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-export default function Tabs({ product, products }) {
+export default function Tabs({ product, products, isPending }) {
   const { categoryName } = useParams();
   const [activeTab, setActiveTab] = useState("Description");
+
+  if (isPending) {
+    return <TabsSkeleton />;
+  }
 
   if (!product || !products) return null;
 
@@ -106,3 +110,74 @@ export default function Tabs({ product, products }) {
     </div>
   );
 }
+
+const TabsSkeleton = () => {
+  return (
+    <div className="container mx-auto px-4 py-12 mt-12 flex flex-col lg:flex-row gap-16 border-t border-gray-100">
+      {/* Left: Tabbed Content Skeleton */}
+      <div className="lg:w-2/3">
+        {/* Tabs Header */}
+        <div className="flex border-b border-gray-100 gap-8 mb-8 overflow-x-auto no-scrollbar">
+          {["Description", "Material", "Reviews"].map((tab, index) => (
+            <div
+              key={index}
+              className="pb-4 text-sm font-bold uppercase tracking-widest text-gray-300 animate-pulse"
+            >
+              {tab}
+            </div>
+          ))}
+        </div>
+
+        {/* Tab Content Skeleton */}
+        <div className="space-y-6">
+          {/* Description Style Skeleton */}
+          <div className="space-y-4">
+            <div className="h-5 bg-gray-200 rounded w-full animate-pulse" />
+            <div className="h-5 bg-gray-200 rounded w-11/12 animate-pulse" />
+            <div className="h-5 bg-gray-200 rounded w-4/5 animate-pulse" />
+            <div className="h-5 bg-gray-200 rounded w-full animate-pulse" />
+          </div>
+
+          {/* Material Cards Skeleton */}
+          <div className="grid grid-cols-2 gap-4 mt-8">
+            {[1, 2].map((i) => (
+              <div
+                key={i}
+                className="border border-gray-100 p-6 rounded bg-gray-50/50 animate-pulse"
+              >
+                <div className="h-6 bg-gray-300 rounded w-20 mb-3" />
+                <div className="h-4 bg-gray-200 rounded w-40" />
+              </div>
+            ))}
+          </div>
+
+          {/* Fake "Write a Review" Button */}
+          <div className="mt-6 flex justify-center">
+            <div className="h-12 w-48 bg-gray-200 rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+
+      {/* Right: Related Products Skeleton */}
+      <div className="lg:w-1/3">
+        <div className="h-9 bg-gray-200 rounded w-56 mb-8 animate-pulse" />
+
+        <div className="space-y-8">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex gap-4">
+              {/* Image Skeleton */}
+              <div className="w-24 h-28 bg-gray-200 rounded overflow-hidden shrink-0 animate-pulse" />
+
+              {/* Text Content Skeleton */}
+              <div className="flex-1 flex flex-col justify-center space-y-3">
+                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse" />
+                <div className="h-5 bg-gray-200 rounded w-3/4 animate-pulse" />
+                <div className="h-5 bg-gray-200 rounded w-20 animate-pulse" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
